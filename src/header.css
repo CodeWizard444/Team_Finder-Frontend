@@ -1,0 +1,213 @@
+.app__navbar {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 20px;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    z-index: 2; 
+}
+
+.app__navbar-logo a{
+    font-size: 1.5em;
+    color: black; 
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.app__navbar-login {
+    width: 130px;
+    height: 30px;
+    background: transparent;
+    border: 3px solid black;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.3em;
+    color: transparent; 
+    font-weight: 650;
+    transition: background-color 0.5s, color 0.5s; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; 
+    margin: 0; 
+    outline: none; 
+    background-color: transparent; 
+}
+
+.app__navbar-login button {
+    padding: 0; 
+    margin: 0; 
+    border: none; 
+    outline: none; 
+    background-color: transparent; 
+    cursor: pointer;
+}
+
+.app__navbar-login:hover
+{
+    background: aliceblue;
+    color:black ;
+}
+.register-wrapper {
+    display: inline-block;
+}
+
+.wrapper{
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0,0,0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: transform .5s ease, height .2s ease;
+}
+
+.form-box h2{
+    font-size: 2em;
+    color:cadetblue;
+    text-align: center;
+}
+
+.input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid cadetblue;
+    margin: 30px 0;
+
+}
+
+.input-box label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: black;
+    font-weight: 700;
+    pointer-events: none;
+    transition: .3s;
+
+}
+
+.input-box input:focus~label, .input-box input:valid~label{
+    top: -5px;
+}
+
+.input-box input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: black;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+
+.input-box .icon{
+    position: absolute;
+    right: 8px;
+    font-size: 1.2em;
+    color: black;
+    line-height: 57px;
+
+}
+
+.remember-forgot {
+    font-size: .9em;
+    color: black;
+    font-weight: 550;
+    margin: -15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.remember-forgot label input{
+    margin-right: 3px;
+}
+
+.remember-forgot a{
+    color: black;
+    text-decoration: none;
+
+}
+
+.remember-forgot a:hover{
+    text-decoration:underline;
+}
+
+button.btn{
+    width: 90%;
+    height: 45px;
+    background: cadetblue;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block; 
+    margin: 0 auto;
+    font-size: 1em;
+    color:#fff;
+    font-weight: 550;
+
+}
+
+.login-register{
+    font-size: .9em;
+    color: black;
+    text-align: center;
+    font-weight: 550;
+    margin: 15px 0 10px;
+}
+
+.login-register p a{
+    color: black;
+    text-decoration: none;
+    font-weight: 650;
+
+}
+
+.login-register p a:hover{
+    text-decoration: underline;
+}
+
+.icon-close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: cadetblue;
+    font-size: 2em;
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.icon-close:hover {
+    background: tomato;
+}
+
+.icon-close:active {
+    transform: scale(0.9);
+}

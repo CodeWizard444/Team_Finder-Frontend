@@ -1,0 +1,23 @@
+.Sign {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.8); 
+    padding: 10px 20px; 
+    border-radius: 10px; 
+    text-align: center;
+}
+
+.Sign .team
+{
+    font-size: 4em;
+    color: black;
+}
+
+.Sign .findr
+{
+    font-size: 4em;
+    color: red;
+}

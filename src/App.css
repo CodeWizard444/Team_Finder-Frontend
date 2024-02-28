@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+.App 
+{
+    display: flex;
+    min-height: 100vh;
+    background: url('/src/assets/img1.webp') no-repeat;
+    background-size: cover;
+    background-position: center;
+  
+}
+
