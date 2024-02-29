@@ -1,74 +1,95 @@
-import React from 'react';
-import { MdMail, MdLock} from 'react-icons/md';
+import React, { useState } from 'react';
+import { MdMail, MdLock } from 'react-icons/md';
 import { IoIosPerson } from 'react-icons/io';
-import styles from './Login.module.css'; // Import CSS module
+import { Link, useNavigate } from 'react-router-dom';
+import './login.css';
 
 const Login = () => {
+    const [showLoginForm, setShowLoginForm] = useState(false);
+    const [showRegisterForm, setShowRegisterForm] = useState(false);
+    const navigate = useNavigate();
+
+    const handleLoginButtonClick = () => {
+        setShowLoginForm(true);
+        setShowRegisterForm(false);
+    }
+
+    const handleRegisterButtonClick = () => {
+        setShowLoginForm(false);
+        setShowRegisterForm(true);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate('/home');
+    }
+
     return (
-        <>
-            <div className={styles.wrapper}>
-                <div className={`${styles['form-box']} ${styles['login']}`}>
+        <div className="wrapperLogin">
+            <div className="wrapperr">
+                <div className="form-box loginn">
                     <h2>Login</h2>
-                    <form action="home.html">
-                        <div className={styles['input-box']}>
-                            <span className={styles.icon}><IoIosPerson /></span>
+                    <form onSubmit={handleSubmit}>
+                        <div className="input-box">
+                            <span className="icon"><IoIosPerson /></span>
                             <input type="text" required />
                             <label>Name</label>
                         </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.icon}><MdMail /></span>
+                        <div className="input-box">
+                            <span className="icon"><MdMail /></span>
                             <input type="email" required />
                             <label>Email</label>
                         </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.icon}><MdLock /></span>
+                        <div className="input-box">
+                            <span className="icon"><MdLock /></span>
                             <input type="password" required />
                             <label>Password</label>
                         </div>
-                        <div className={styles['remember-forgot']}>
+                        <div className="remember-forgot">
                             <label><input type="checkbox" />Remember me</label>
                             <a href="#">Forgot Password?</a>
                         </div>
-                        <button type="submit" className={styles.btn}>Login</button>
-                        <div className={styles['login-register']}>
+                        <button type="submit" className="btn">Login</button>
+                        <div className="login-register">
                             <p>Don't have an account?
-                                <a href="#" className={styles['register-link']}>Register</a>
+                                <button type="button" className="register-link" onClick={handleRegisterButtonClick}>Register</button>
                             </p>
                         </div>
                     </form>
                 </div>
-
-                <div className={`${styles['form-box']} ${styles['register']}`}>
-                    <h2>Registration</h2>
-                    <form action="home.html">
-                        <div className={styles['input-box']}>
-                            <span className={styles.icon}><IoIosPerson /></span>
+                {showRegisterForm && (
+                    <div className="form-box register">
+                        <h2>Registration</h2>
+                        <form onSubmit={handleSubmit}>
+                        <div className="input-box">
+                            <span className="icon"><IoIosPerson /></span>
                             <input type="text" required />
                             <label>Name</label>
                         </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.icon}><MdMail /></span>
+                        <div className="input-box">
+                            <span className="icon"><MdMail /></span>
                             <input type="email" required />
                             <label>Email</label>
                         </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.icon}><MdLock /></span>
+                        <div className="input-box">
+                            <span className="icon"><MdLock /></span>
                             <input type="password" required />
                             <label>Password</label>
                         </div>
-                        <div className={styles['remember-forgot']}>
-                            <label><input type="checkbox" />I agree with the term & conditions</label>
+                        <div className="remember-forgot">
+                            <label><input type="checkbox" />I agree with the terms & conditions</label>
                         </div>
-                        <button type="submit" className={styles.btn}>Register</button>
-                        <div className={styles['login-register']}>
+                        <button type="submit" className="btn">Register</button>
+                        <div className="login-register">
                             <p>Already have an account?
-                                <a href="#" className={styles['login-link']}>Login</a>
+                                <button type="button" className="register-link" onClick={handleLoginButtonClick}>Login</button>
                             </p>
                         </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                )}
             </div>
-        </>
+        </div>
     );
 }
 

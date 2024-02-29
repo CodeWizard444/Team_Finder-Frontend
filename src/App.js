@@ -12,6 +12,7 @@ function App() {
       <Header />
       <Sign />
       <Routes>
+  
         <Route path="/" element={<Header />} />
         <Route path="/home" element={<Home />} />
       </Routes>

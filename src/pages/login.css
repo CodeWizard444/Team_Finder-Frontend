@@ -1,27 +1,23 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-body{
+.wrapperLogin {
     display: flex;
-    justify-content: center;
+    justify-content: center; 
     align-items: center;
     min-height: 100vh;
-    background: url('/sites/img2.webp') no-repeat;
+    background: url('../assets/img2.webp') no-repeat;
     background-size: cover;
     background-position: center;
-
 }
-.wrapper
-{
-    position: relative;
+
+.wrapper {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
     height: 420px;
-    width: 390px;
-    border: 3px solid  rgba(255,255,255, .5);
+    width: 400px;
     background: transparent;
+    border: 2px solid rgba(255,255,255, .5);
     border-radius: 20px;
     backdrop-filter: blur(20px);
     box-shadow: 0 0 30px rgba(0,0,0, .5);
@@ -29,41 +25,17 @@ body{
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    transition: transform .5s ease, height .2s ease;;
+    transition: transform .5s ease, height .2s ease;
 }
 
-.wrapper.active{
+.wrapper.active {
     top: 5px;
 }
 
-.wrapper .form-box{
+.wrapper .form-box {
     width: 100%;
-    padding: 5px;
-}
-
-.wrapper .form-box.login{
-    transition: transform .2s ease;
-    transform: translateX(0);
-
-
-}
-
-.wrapper.active .form-box.login{
-    transition: none;
-    transform: translateX(-420px);
-
-}
-
-.wrapper .form-box.register{
-    position: absolute;
-    transition: none;
-    transform: translateX(420px);
-}
-
-.wrapper.active .form-box.register{
-    transition: transform .2s ease;
-    transform: translateX(0);
-    
+    padding: 20px; 
+    box-sizing: border-box;
 }
 
 .form-box h2{
@@ -78,7 +50,6 @@ body{
     height: 50px;
     border-bottom: 2px solid cadetblue;
     margin: 30px 0;
-
 }
 
 .input-box label{
@@ -91,7 +62,6 @@ body{
     font-weight: 700;
     pointer-events: none;
     transition: .3s;
-
 }
 
 .input-box input:focus~label, .input-box input:valid~label{
@@ -116,7 +86,6 @@ body{
     font-size: 1.2em;
     color: black;
     line-height: 57px;
-
 }
 
 .remember-forgot {
@@ -135,7 +104,6 @@ body{
 .remember-forgot a{
     color: black;
     text-decoration: none;
-
 }
 
 .remember-forgot a:hover{
@@ -155,7 +123,6 @@ body{
     font-size: 1em;
     color:#fff;
     font-weight: 550;
-
 }
 
 .login-register{
@@ -170,9 +137,9 @@ body{
     color: black;
     text-decoration: none;
     font-weight: 650;
-
 }
 
 .login-register p a:hover{
     text-decoration: underline;
 }
+

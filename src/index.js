@@ -6,17 +6,21 @@ import App from './App';
 import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
+import CurentProject from './pages/CurenProject';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} /> 
-        <Route path="/home" element={<Home />} /> 
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
+          <Route path="/" element={<App />} /> 
+          <Route path="/about" element={<About />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/curentproject" element={<CurentProject />} />
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

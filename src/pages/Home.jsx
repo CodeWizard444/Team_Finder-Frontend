@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     return (
         <div className="container">
+            
+            
             <div className="sidebar">
                 <div className="sidebar-header">
                     <span className="sidebar-title">Sidebar</span>
@@ -13,38 +15,28 @@ const Home = () => {
                 <nav>
                     <ul className="nav-menu">
                         <li>
-                            <a href="home.html" className="nav-link active">
-                                Home
+                            <a href="/home" className="nav-link active">
+                                Dasboard
                             </a>
                         </li>
                         <li>
-                            <a href="dashboard.html" className="nav-link">
-                                Dashboard
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="nav-link">
-                                Current Projects
-                            </a>
+                            <Link to="/curentproject" className="nav-link">
+                                Curent Projects
+                            </Link>
                         </li>
                         <li>
                             <a href="#" className="nav-link">
-                                Available Teams
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="nav-link">
-                                New Project
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="nav-link">
-                                Create Teams
+                                New Projects
                             </a>
                         </li>
                         <li>
                             <a href="#" className="nav-link">
                                 Employee Skill
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" className="nav-link">
+                                Admin
                             </a>
                         </li>
                     </ul>
@@ -65,15 +57,20 @@ const Home = () => {
             <div className="login-container">
                 <Link to="/login" className="login-link">Employee login</Link>
             </div>
-            <div className="circle-1">
+            <div className="circles circle-1">
                 <a href="/about" className="profile-view">Profile</a>
             </div>
-            <div className="circle-2">
+            <div className="circles circle-2">
                 <a href="/about" className="departments-view">Departments</a>
             </div>
-            <div className="circle-3">
+            <div className="circles circle-3">
                 <a href="/about" className="leaderboards-view">Leaderboards</a>
             </div>
+            <div className="look">
+                <h2>Have a l<span class="circle-4"></span><span class="circle-5"></span>k ar<span class="circle-6"></span>und!</h2>
+                <h3>And you will be surprised what you cand find out</h3>
+            </div>
+            
         </div>
     );
 }
