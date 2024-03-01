@@ -12,7 +12,7 @@
 
 .app__navbar-logo a{
     font-size: 1.5em;
-    color: black; 
+    color: white; 
     font-weight: 500;
     cursor: pointer;
     text-decoration: none;
@@ -22,7 +22,7 @@
     width: 130px;
     height: 30px;
     background: transparent;
-    border: 3px solid black;
+    border: 3px solid white;
     outline: none;
     border-radius: 6px;
     cursor: pointer;
@@ -52,6 +52,7 @@
 {
     background: aliceblue;
     color:black ;
+    border: 3px solid black;
 }
 .register-wrapper {
     display: inline-block;

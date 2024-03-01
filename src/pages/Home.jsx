@@ -21,12 +21,12 @@ const Home = () => {
                         </li>
                         <li>
                             <Link to="/curentproject" className="nav-link">
-                                Curent Projects
+                                Projects
                             </Link>
                         </li>
                         <li>
                             <a href="#" className="nav-link">
-                                New Projects
+                                New Project
                             </a>
                         </li>
                         <li>
@@ -61,7 +61,7 @@ const Home = () => {
                 <a href="/about" className="profile-view">Profile</a>
             </div>
             <div className="circles circle-2">
-                <a href="/about" className="departments-view">Departments</a>
+                <a href="/departments" className="departments-view">Departments</a>
             </div>
             <div className="circles circle-3">
                 <a href="/about" className="leaderboards-view">Leaderboards</a>

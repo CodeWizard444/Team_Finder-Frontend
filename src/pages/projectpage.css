@@ -1,0 +1,141 @@
+.pag {
+    background-image: linear-gradient(rgba(7, 211, 247, 0.916) 15%,rgb(218, 139, 152) ,rgb(218, 139, 152));
+    min-height: 100vh;
+    position: relative;
+}
+
+.description-box {
+    background-color: #3760C9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    cursor: text;
+    height: 300px;
+    width: 500px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    position: absolute;
+    top: 0;
+    left: 100px;
+}
+
+.description-box textarea {
+    resize: none;
+    width: calc(100% - 40px); 
+    height: calc(100% - 40px); 
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1.3em;
+    spellcheck: false;
+}
+
+
+.details
+{
+    background-color: #3760C9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    cursor: text;
+    height: 300px;
+    width: 500px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    position: absolute;
+    top: 0;
+    right: 100px;
+}
+
+.details textarea
+{
+    resize: none;
+    width: calc(100% - 40px); 
+    height: calc(100% - 40px); 
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1.3em;
+    spellcheck: false;
+}
+
+.technology
+{
+    background-color: #3760C9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    cursor: text;
+    height: 300px;
+    width: 500px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    position: absolute;
+    left: 100px;
+    bottom: 0;
+}
+
+.technology textarea
+{
+    resize: none;
+    width: calc(100% - 40px); 
+    height: calc(100% - 40px); 
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1.3em;
+    spellcheck: false;
+}
+
+.team-members
+{
+    background-color: #3760C9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    cursor: text;
+    height: 300px;
+    width: 500px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    position: absolute;
+    right: 100px;
+    bottom: 0;
+}
+
+.box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid cadetblue;
+    margin: 12px 0;
+
+}
+
+.box label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: black;
+    font-weight: 700;
+    pointer-events: none;
+    transition: .3s;
+
+}
+
+.box input:focus~label, .box input:valid~label{
+    top: -5px;
+}
+
+.box input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: black;
+    padding: 0 35px 0 5px;
+}

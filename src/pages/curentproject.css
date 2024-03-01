@@ -7,13 +7,15 @@
 .page {
     display: flex;
     height: 100vh;
+    background-image: linear-gradient(#5A585A,#090947);
+    
     
 }
 .sidebarr {
     width: 280px;
     height: 100vh;
-    background-color: rgba(7, 211, 247, 0.916) ;
-    border:2px solid white;
+    background-image: linear-gradient(#191714,#2234AE);
+    border:none;
     border-radius: .3em;
     color: #fff;
     padding: 20px;
@@ -104,4 +106,521 @@
 
 .dropdown-itemm {
     color: #fff;
+}
+
+.Project-1 {
+    height: 200px;
+    width: 300px;
+    background-color: #3760C9;
+    position: relative;
+    display: flex;
+    top: 100px;
+    justify-content: center;
+    z-index: 0;
+  }
+  
+  .lid {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-right: 150px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-left: 150px solid transparent;
+    transform-origin: top;
+    transition: transform 0.25s linear;
+  }
+  
+
+  .lid.one {
+    border-top: 100px solid #658ced;
+    transform: rotateX(0deg);
+    z-index: 3;
+    transition-delay: 0.75s;
+  }
+  
+
+  .lid.two {
+    border-top: 100px solid #3760C9;
+    transform: rotateX(90deg);
+    z-index: 1;
+    transition-delay: 0.5s;
+  }
+  
+  .envelope {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-top: 100px solid transparent;
+    border-right: 150px solid #C4DFF0;
+    border-bottom: 100px solid #C4DFF0;
+    border-left: 150px solid #a4d4f2;
+    z-index: 3;
+  }
+  
+  .letter {
+    position: absolute;
+    top: 0;
+    width: 80%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 15px;
+    z-index: 2;
+    display: flex;
+    justify-content: center; 
+    transition: 0.5s;
+  }
+  
+  .letter a {
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: 30px;
+    color: black;
+  }
+  
+  .Project-1:hover .lid.one {
+      transform: rotateX(90deg);
+      transition-delay: 0s;
+  }
+  
+  .Project-1:hover .lid.two {
+      transform: rotateX(180deg);
+      transition-delay: 0.25s;
+  }
+  
+  .Project-1:hover .letter {
+    transform: translateY(-50px);
+    transition-delay: 0.5s;
+  }
+
+  
+.Project-2 {
+    height: 200px;
+    width: 300px;
+    background-color: #3760C9;
+    position: relative;
+    display: flex;
+    top: -100px;
+    left: 475px;
+    justify-content: center;
+    z-index: 0;
+  }
+  
+  .lid2 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-right: 150px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-left: 150px solid transparent;
+    transform-origin: top;
+    transition: transform 0.25s linear;
+  }
+  
+
+  .lid2.three {
+    border-top: 100px solid #658ced;
+    transform: rotateX(0deg);
+    z-index: 3;
+    transition-delay: 0.75s;
+  }
+  
+
+  .lid2.four {
+    border-top: 100px solid #3760C9;
+    transform: rotateX(90deg);
+    z-index: 1;
+    transition-delay: 0.5s;
+  }
+  
+  .envelope2 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-top: 100px solid transparent;
+    border-right: 150px solid #C4DFF0;
+    border-bottom: 100px solid #C4DFF0;
+    border-left: 150px solid #a4d4f2;
+    z-index: 3;
+  }
+  
+  .letter2 {
+    position: absolute;
+    top: 0;
+    width: 80%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 15px;
+    z-index: 2;
+    display: flex;
+    justify-content: center; 
+    transition: 0.5s;
+  }
+  
+  .letter2 a {
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: 30px;
+    color: black;
+  }
+  
+  .Project-2:hover .lid2.three {
+      transform: rotateX(90deg);
+      transition-delay: 0s;
+  }
+  
+  .Project-2:hover .lid2.four {
+      transform: rotateX(180deg);
+      transition-delay: 0.25s;
+  }
+  
+  .Project-2:hover .letter2 {
+    transform: translateY(-50px);
+    transition-delay: 0.5s;
+  }
+
+   
+.Project-3 {
+    height: 200px;
+    width: 300px;
+    background-color: #3760C9;
+    position: relative;
+    display: flex;
+    top: -300px;
+    left: 950px;
+    justify-content: center;
+    z-index: 0;
+  }
+  
+  .lid3 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-right: 150px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-left: 150px solid transparent;
+    transform-origin: top;
+    transition: transform 0.25s linear;
+  }
+  
+
+  .lid3.five {
+    border-top: 100px solid #658ced;
+    transform: rotateX(0deg);
+    z-index: 3;
+    transition-delay: 0.75s;
+  }
+  
+
+  .lid3.six {
+    border-top: 100px solid #3760C9;
+    transform: rotateX(90deg);
+    z-index: 1;
+    transition-delay: 0.5s;
+  }
+  
+  .envelope3 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-top: 100px solid transparent;
+    border-right: 150px solid #C4DFF0;
+    border-bottom: 100px solid #C4DFF0;
+    border-left: 150px solid #a4d4f2;
+    z-index: 3;
+  }
+  
+  .letter3 {
+    position: absolute;
+    top: 0;
+    width: 80%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 15px;
+    z-index: 2;
+    display: flex;
+    justify-content: center; 
+    transition: 0.5s;
+  }
+  
+  .letter3 a {
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: 30px;
+    color: black;
+  }
+  
+  .Project-3:hover .lid3.five {
+      transform: rotateX(90deg);
+      transition-delay: 0s;
+  }
+  
+  .Project-3:hover .lid3.six {
+      transform: rotateX(180deg);
+      transition-delay: 0.25s;
+  }
+  
+  .Project-3:hover .letter3 {
+    transform: translateY(-50px);
+    transition-delay: 0.5s;
+  }
+
+    
+.Project-4 {
+    height: 200px;
+    width: 300px;
+    background-color: #3760C9;
+    position: relative;
+    display: flex;
+    top: -200px;
+    left: 0px;
+    justify-content: center;
+    z-index: 0;
+  }
+  
+  .lid4 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-right: 150px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-left: 150px solid transparent;
+    transform-origin: top;
+    transition: transform 0.25s linear;
+  }
+  
+
+  .lid4.seven {
+    border-top: 100px solid #658ced;
+    transform: rotateX(0deg);
+    z-index: 3;
+    transition-delay: 0.75s;
+  }
+  
+
+  .lid4.eight {
+    border-top: 100px solid #3760C9;
+    transform: rotateX(90deg);
+    z-index: 1;
+    transition-delay: 0.5s;
+  }
+  
+  .envelope4 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-top: 100px solid transparent;
+    border-right: 150px solid #C4DFF0;
+    border-bottom: 100px solid #C4DFF0;
+    border-left: 150px solid #a4d4f2;
+    z-index: 3;
+  }
+  
+  .letter4 {
+    position: absolute;
+    top: 0;
+    width: 80%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 15px;
+    z-index: 2;
+    display: flex;
+    justify-content: center; 
+    transition: 0.5s;
+  }
+  
+  .letter4 a {
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: 30px;
+    color: black;
+  }
+  
+  .Project-4:hover .lid4.seven {
+      transform: rotateX(90deg);
+      transition-delay: 0s;
+  }
+  
+  .Project-4:hover .lid4.eight {
+      transform: rotateX(180deg);
+      transition-delay: 0.25s;
+  }
+  
+  .Project-4:hover .letter4 {
+    transform: translateY(-50px);
+    transition-delay: 0.5s;
+  }
+
+     
+.Project-5 {
+    height: 200px;
+    width: 300px;
+    background-color: #3760C9;
+    position: relative;
+    display: flex;
+    top: -400px;
+    left: 475px;
+    justify-content: center;
+    z-index: 0;
+  }
+  
+  .lid5 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-right: 150px solid transparent;
+    border-bottom: 100px solid transparent;
+    border-left: 150px solid transparent;
+    transform-origin: top;
+    transition: transform 0.25s linear;
+  }
+  
+
+  .lid5.nine {
+    border-top: 100px solid #658ced;
+    transform: rotateX(0deg);
+    z-index: 3;
+    transition-delay: 0.75s;
+  }
+  
+
+  .lid5.ten {
+    border-top: 100px solid #3760C9;
+    transform: rotateX(90deg);
+    z-index: 1;
+    transition-delay: 0.5s;
+  }
+  
+  .envelope5 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-top: 100px solid transparent;
+    border-right: 150px solid #C4DFF0;
+    border-bottom: 100px solid #C4DFF0;
+    border-left: 150px solid #a4d4f2;
+    z-index: 3;
+  }
+  
+  .letter5 {
+    position: absolute;
+    top: 0;
+    width: 80%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 15px;
+    z-index: 2;
+    display: flex;
+    justify-content: center; 
+    transition: 0.5s;
+  }
+  
+  .letter5 a {
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: 30px;
+    color: black;
+  }
+  
+  .Project-5:hover .lid5.nine {
+      transform: rotateX(90deg);
+      transition-delay: 0s;
+  }
+  
+  .Project-5:hover .lid5.ten {
+      transform: rotateX(180deg);
+      transition-delay: 0.25s;
+  }
+  
+  .Project-5:hover .letter5 {
+    transform: translateY(-50px);
+    transition-delay: 0.5s;
+  }
+  .search {
+    position: absolute;
+    top: 5px; 
+    right: 5px; 
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+
+.search-icon
+{
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    transition:  0.3s ease;
+}
+
+.search-icon:hover
+{
+    color:#090947;
+}
+
+.search-bar-container {
+    position: fixed;
+    top: calc(100% + 10px); 
+    right: 0;
+    height: 30px;
+    width: 300px; 
+    padding: 20px; 
+    border-radius: .3em;
+    background-color: #fff; 
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    clip-path: polygon(0 0,100% 0, 100% 0, 0 0);
+    transition: top 0.3s ease;
+}
+.search-bar-container.active {
+    visibility: visible;
+    clip-path: polygon(0 0,100% 0, 100% 100%, 0 100%);
+    right: 35px;
+    top: 0;
+}
+
+
+.search-bar-container #search-bar {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px; 
+    border: none;
+    outline: none;
+}
+
+.search-bar-container label {
+    color:#a4d4f2; 
+    cursor: pointer;
+    font-size: 1.5em; 
+    margin-left: 10px; 
+}
+
+.search-bar-container label:hover {
+    color:#090947; 
 }

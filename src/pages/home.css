@@ -9,14 +9,14 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-image: linear-gradient(rgba(7, 211, 247, 0.916) 15%,rgb(218, 139, 152) ,rgb(218, 139, 152));
+    background: linear-gradient(to right, rgb(5, 117, 230), rgb(2, 27, 121));
 }
 
 .sidebar {
     width: 280px;
     height: 100vh;
-    background-color: rgba(7, 211, 247, 0.916) ;
-    border:2px solid white;
+    background-image: linear-gradient(#191714,#2234AE);
+    border:none;
     border-radius: .3em;
     color: #fff;
     padding: 20px;
@@ -107,7 +107,7 @@
     top: -50px; 
     margin-left: auto;
     margin-right: auto;
-    background-color: rgba(7, 211, 247, 0.916);
+    background-image: linear-gradient(#191714,#2234AE);
     border-radius: .3em;
 }
 .login-link {
@@ -131,7 +131,7 @@
     align-items: center;
     position: absolute;
     border-radius: 50%;
-    background-color: rgba(7, 211, 247, 0.916);
+    background-image: linear-gradient(#191714,#2234AE);
     box-shadow: 0 1em 2em rgba(64, 61, 61, 0.1);
 }
 

@@ -30,59 +30,59 @@ const Login = () => {
                 <div className="form-box loginn">
                     <h2>Login</h2>
                     <form onSubmit={handleSubmit}>
-                        <div className="input-box">
+                        <div className="input-boxx">
                             <span className="icon"><IoIosPerson /></span>
                             <input type="text" required />
                             <label>Name</label>
                         </div>
-                        <div className="input-box">
+                        <div className="input-boxx">
                             <span className="icon"><MdMail /></span>
                             <input type="email" required />
                             <label>Email</label>
                         </div>
-                        <div className="input-box">
+                        <div className="input-boxx">
                             <span className="icon"><MdLock /></span>
                             <input type="password" required />
                             <label>Password</label>
                         </div>
-                        <div className="remember-forgot">
+                        <div className="remember-forgott">
                             <label><input type="checkbox" />Remember me</label>
                             <a href="#">Forgot Password?</a>
                         </div>
-                        <button type="submit" className="btn">Login</button>
-                        <div className="login-register">
+                        <button type="submit" className="btnn">Login</button>
+                        <div className="login-registerr">
                             <p>Don't have an account?
-                                <button type="button" className="register-link" onClick={handleRegisterButtonClick}>Register</button>
+                                <button type="button" className="register-linkk" onClick={handleRegisterButtonClick}>Register</button>
                             </p>
                         </div>
                     </form>
                 </div>
                 {showRegisterForm && (
-                    <div className="form-box register">
+                    <div className="form-box registerr">
                         <h2>Registration</h2>
                         <form onSubmit={handleSubmit}>
-                        <div className="input-box">
+                        <div className="input-boxx">
                             <span className="icon"><IoIosPerson /></span>
                             <input type="text" required />
                             <label>Name</label>
                         </div>
-                        <div className="input-box">
+                        <div className="input-boxx">
                             <span className="icon"><MdMail /></span>
                             <input type="email" required />
                             <label>Email</label>
                         </div>
-                        <div className="input-box">
+                        <div className="input-boxx">
                             <span className="icon"><MdLock /></span>
                             <input type="password" required />
                             <label>Password</label>
                         </div>
-                        <div className="remember-forgot">
+                        <div className="remember-forgott">
                             <label><input type="checkbox" />I agree with the terms & conditions</label>
                         </div>
-                        <button type="submit" className="btn">Register</button>
-                        <div className="login-register">
+                        <button type="submit" className="btnn">Register</button>
+                        <div className="login-registerr">
                             <p>Already have an account?
-                                <button type="button" className="register-link" onClick={handleLoginButtonClick}>Login</button>
+                                <button type="button" className="register-linkk" onClick={handleLoginButtonClick}>Login</button>
                             </p>
                         </div>
                         </form>
