@@ -64,7 +64,7 @@ const Home = () => {
                 <a href="/departments" className="departments-view">Departments</a>
             </div>
             <div className="circles circle-3">
-                <a href="/about" className="leaderboards-view">Leaderboards</a>
+                <a href="/skills" className="skill-view">Skills</a>
             </div>
             <div className="look">
                 <h2>Have a l<span class="circle-4"></span><span class="circle-5"></span>k ar<span class="circle-6"></span>und!</h2>

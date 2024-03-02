@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import CurentProject from './pages/CurenProject';
 import ProjectPage from './pages/ProjectPage';
 import Departments from './pages/Departments';
+import Skills from './pages/Skills';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
@@ -22,8 +23,9 @@ ReactDOM.render(
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/curentproject" element={<CurentProject />} />
-          <Route path="projectpage" element={<ProjectPage />} />
-          <Route path="departments" element={<Departments />} />
+          <Route path="/projectpage" element={<ProjectPage />} />
+          <Route path="/departments" element={<Departments />} />
+          <Route path="/skills" element={<Skills />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

@@ -158,7 +158,7 @@
 
 .profile-view,
 .departments-view,
-.leaderboards-view {
+.skill-view {
     text-decoration: none;
     border-radius: 50%;
     box-shadow: 0 1em 2em rgba(0,0,0,.1);
@@ -175,7 +175,7 @@
 
 .profile-view:hover,
 .departments-view:hover,
-.leaderboards-view:hover {
+.skill-view:hover {
     background-color: rgb(185, 144, 151); 
 }
 
