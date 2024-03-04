@@ -39,7 +39,7 @@ const Header = () => {
             <div className="app__navbar-login">
                 <button type="button" onClick={handleLoginButtonClick}>Login</button>
                 {showLoginForm && (
-                    <div className="wrapper">
+                    <div className="wrappe">
                         <span className="icon-close" onClick={handleCloseButtonClick}>×</span>
                         <div className="form-box login">
                             <h2>Login</h2>
@@ -73,7 +73,7 @@ const Header = () => {
             
             
                 {showRegisterForm && (
-                    <div className="wrapper">
+                    <div className="wrappe">
                         <span className="icon-close" onClick={handleCloseButtonClick}>×</span>
                         <div className="form-box register">
                             <h2>Register</h2>

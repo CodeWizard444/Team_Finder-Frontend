@@ -121,7 +121,7 @@ const Skills = () => {
               
               onSubmit={handleFormSubmit}
               >
-              <div className="wrapper">
+              <div className="wrapperrr">
                 <textarea
                 id="editSkill"
                 className="inputs"
@@ -158,7 +158,7 @@ const Skills = () => {
     return (
         <div className="skill">
             <form onSubmit={handleFormSubmit}>
-                <div className="wrapper">
+                <div className="wrapperrr">
                 <textarea
                 id="skill"
                 className="inputs"

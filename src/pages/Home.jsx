@@ -1,64 +1,51 @@
-import React from 'react';
-import userImg from '../assets/user.jpg';
+import React, { useState } from 'react';
+import {Link} from 'react-router-dom';
 import './home.css';
-import { Link } from 'react-router-dom';
+
 const Home = () => {
+
+    const [showProfileForm, setShowProfileForm] = useState(false);
+
+    const handleProfileButtonClick = () => {
+        setShowProfileForm(!showProfileForm);
+    }
+
+
+    const handleCloseButtonClick = () => {
+        setShowProfileForm(false);
+    }
+
+
     return (
+
         <div className="container">
             
-            
-            <div className="sidebar">
-                <div className="sidebar-header">
-                    <span className="sidebar-title">Sidebar</span>
-                </div>
-                <hr />
-                <nav>
-                    <ul className="nav-menu">
-                        <li>
-                            <a href="/home" className="nav-link active">
-                                Dasboard
-                            </a>
-                        </li>
-                        <li>
-                            <Link to="/curentproject" className="nav-link">
-                                Projects
-                            </Link>
-                        </li>
-                        <li>
-                            <a href="#" className="nav-link">
-                                New Project
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="nav-link">
-                                Employee Skill
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="nav-link">
-                                Admin
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <hr />
-                <div className="dropdown">
-                    <button className="dropdown-toggle" type="button">
-                        <img src={userImg} alt="User" width="32" height="32" className="user-avatar" />
-                        <strong>user</strong>
-                    </button>
-                    <div className="dropdown-menu">
-                        <a className="dropdown-item" href="#">New project...</a>
-                        <a className="dropdown-item" href="#">Status</a>
-                    </div>
-                </div>
-            </div>
-
             <div className="login-container">
                 <Link to="/login" className="login-link">Employee login</Link>
             </div>
             <div className="circles circle-1">
-                <a href="/about" className="profile-view">Profile</a>
+            <button type="button" onClick={handleProfileButtonClick}>Profile</button>
+                {showProfileForm && (
+                    <div className="profile">
+                        <span className="icn-close" onClick={handleCloseButtonClick}>×</span>
+                        <div className="frm-box profile">
+                            <h2>Profile</h2>
+                            <form >
+                                <div className="input-bx">
+                                    Status: user
+                                </div>
+                                <div className="input-bx">
+                                    Skills: React.js,Kanban & Azure
+                                </div>
+                                <div className="input-bx">
+                                    Department: Departament 1
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                )}
+            
             </div>
             <div className="circles circle-2">
                 <a href="/departments" className="departments-view">Departments</a>

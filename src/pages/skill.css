@@ -6,15 +6,21 @@
     background-image: linear-gradient(181deg, rgb(2, 0, 97) 15%, rgb(97, 149, 219) 158.5%);
 }
 
-.wrapper
+.wrapperrr
 {
     position: absolute;
-    top: 100px;
+    top: 60px;
     height: 100px;
+    width: 400px;
+    border: 3.5px solid black;
+    border-radius: .5em;
+    display: flex;
+    overflow: hidden;
+    left: 37.5%;
     
     
 }
-.wrapper textarea
+.wrapperrr textarea
 {
     resize: none;
     height: 100%; 

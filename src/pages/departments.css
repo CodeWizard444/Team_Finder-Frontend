@@ -9,8 +9,13 @@
 .wrapper
 {
     position: absolute;
-    top: 100px;
-    
+    top: 80px;
+    width: 400px;
+    border: 3.5px solid black;
+    border-radius: .5em;
+    display: flex;
+    overflow: hidden;
+    left: 37.5%;
 }
 
 .inputs {
