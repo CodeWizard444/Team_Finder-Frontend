@@ -1,7 +1,8 @@
 export const mockData = [
     {
       id: 1,
-      name: "Jon Snow",
+      name: "Aiden Brown",
+      department: "-",
       skill: "JavaScript",
       level: 5,
       experience: ">7 years",
@@ -9,7 +10,8 @@ export const mockData = [
     },
     {
       id: 2,
-      name: "Cersei Lannister",
+      name: "Sarah Johnson",
+      department: "Departamnet 1",
       skill: "HTML",
       level: 3,
       experience: "1-2 years",
@@ -17,23 +19,26 @@ export const mockData = [
     },
     {
       id: 3,
-      name: "Jaime Lannister",
+      name: "Anna Kim",
       skill: "React.js",
+      department: "Departamnet 1",
       level: 1,
       experience: "0-6 months",
       access: "user",
     },
     {
       id: 4,
-      name: "Anya Stark",
+      name: "Liam Smith",
+      department: "Departamnet 2",
       skill: "Node.js",
       level: 4,
       experience: "2-4 years",
-      access: "admin",
+      access: "user",
     },
     {
       id: 5,
-      name: "Daenerys Targaryen",
+      name: "Jon Doe",
+      department: "Departamnet 1",
       skill: "Sql",
       level: 2,
       experience: "6-12 months",
@@ -41,7 +46,8 @@ export const mockData = [
     },
     {
       id: 6,
-      name: "Ever Melisandre",
+      name: "Ethan White",
+      department: "Departamnet 1",
       skill: "Kanban",
       level: 5,
       experience: "4-7 years",
@@ -50,6 +56,7 @@ export const mockData = [
     {
       id: 7,
       name: "Ferrara Clifford",
+      department: "Departamnet 2",
       skill: "Adobe Photoshop",
       level: 3,
       experience: "1-2 years",
@@ -58,6 +65,7 @@ export const mockData = [
     {
       id: 8,
       name: "Rossini Frances",
+      department: "Departamnet 2",
       skill: "Microsoft Azure",
       level: 4,
       experience: "2-4 years",
@@ -66,6 +74,7 @@ export const mockData = [
     {
       id: 9,
       name: "Harvey Roxie",
+      department: "Departamnet 2",
       skill: "JavaScript",
       level: 5,
       experience: ">7 years",

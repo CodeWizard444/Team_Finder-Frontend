@@ -1,0 +1,132 @@
+.add 
+{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.724);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal 
+{
+  padding: 50px;
+  border-radius: 10px;
+  background-color: white;
+  position: relative;
+  z-index: 20;
+}
+.modal h1 
+{
+    margin-bottom: 40px;
+    font-size: 24px;
+    color: cadetblue;
+}
+
+.close
+{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  background: cadetblue;
+  font-size: 2em;
+  color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  z-index: 1;
+}
+
+.close:hover {
+  background: #090947;
+}
+
+.close:active {
+  transform: scale(0.9);
+}
+
+.modal form 
+{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 500px;
+    justify-content: space-between;
+}
+.item 
+{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.modal label 
+{
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.modal input 
+{
+    padding: 10px;
+    background-color: transparent;
+    color: black;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.modal button 
+{
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.item textarea
+{
+  resize: none;
+}
+
+.tech-stack-container {
+  width: 220px;
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.tech-stack-options {
+  padding-right: 10px; 
+}
+
+.tech-stack-option {
+  display: flex;
+  align-items: center;
+  white-space: nowrap; 
+}
+
+.tech-stack-option input {
+  margin-right: 5px;
+}
+
+.send-button {
+  
+  background-color: cadetblue;
+  height: 35px;
+  font-size: 1.5em;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  line-height: 15px;
+}
+
+.send-button:hover {
+  background-color: #090947;
+}

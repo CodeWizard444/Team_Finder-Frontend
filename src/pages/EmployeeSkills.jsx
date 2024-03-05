@@ -1,82 +1,60 @@
-import { Box,Typography} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-
-import  mockData from '../data/mockData';
-import { AdminPanelSettingsOutlined as AdminIcon, LockOpenOutlined as LockIcon, SecurityOutlined as SecurityIcon,AddModeratorOutlined as ModeratorIcon } from '@mui/icons-material';
-
 import { blue, green } from "@mui/material/colors";
+import { v4 as uuidv4 } from 'uuid'; 
 
+const EmployeeSkills = () => {
+  const [skills, setSkills] = useState(() => {
+    const storedSkills = localStorage.getItem('skills');
+    return storedSkills ? JSON.parse(storedSkills) : [];
+  });
 
-const EmployeeSkills= () => {
-  
+  useEffect(() => {
+    localStorage.setItem('skills', JSON.stringify(skills));
+  }, [skills]);
+
   const columns = [
-    { field: "id", headerName: "ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "level",
-      headerName: "Level",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "experience",
-      headerName: "Experience",
-      flex: 1,
-    },
-    {
-      field: "skill",
-      headerName: "Skill",
-      flex: 1,
-    },
-    {
-      field: "access",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { access } }) => {
-        return (
-          <Box
-            width="80%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-                access === "admin"
-                  ? blue[900] 
-                  : access === "department-manager"
-                  ? blue[700] 
-                  : access === "project-manager"
-                  ? blue[500] 
-                  : blue[300] 
-              }
-            borderRadius="4px"
-          >
-           {access === "admin" && <AdminIcon />}
-           {access === "department-manager" && <ModeratorIcon />}
-          {access === "project-manager" && <SecurityIcon />}
-          {access === "user" && <LockIcon />}
-          <Typography color="black" sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
-          </Box>
-        );
-      },
-    },
+    { field: "id", headerName: "ID", hide: true },
+    { field: "name", headerName: "Name", flex: 1 },
+    { field: "skill", headerName: "Skill", flex: 1 },
+    { field: "level", headerName: "Level", flex: 1 },
+    { field: "experience", headerName: "Experience", flex: 1 },
+    { field: "department", headerName: "Department", flex: 1 },
   ];
 
+  const [newSkill, setNewSkill] = useState({
+    id: "",
+    name: "",
+    skill: "",
+    level: "",
+    experience: "",
+    department: "",
+  });
+
+  const handleAddSkill = () => {
+    const id = uuidv4();
+    const newSkillWithId = { ...newSkill, id }; 
+    setSkills([...skills, newSkillWithId]);
+    setNewSkill({
+      id: "",
+      name: "",
+      skill: "",
+      level: "",
+      experience: "",
+      department: "",
+    });
+  };
+
   return (
-    <Box  ml="280px" bgcolor="#f0f0f0">
+    <Box ml="280px" bgcolor="#f0f0f0">
       <Box
         m="0 0 0 0"
-        height="100vh"
+        height="140vh"
         width="177vh"
         sx={{
+          display: "flex",
+          flexDirection: "column",
           "& .MuiDataGrid-root": {
             border: "none",
           },
@@ -97,10 +75,61 @@ const EmployeeSkills= () => {
             borderTop: "none",
             backgroundColor: blue[600],
           },
-          
         }}
       >
-        <DataGrid  rows={mockData} columns={columns} />
+        <Box p={2} bgcolor="#fff" boxShadow={1} mb={2}>
+          <Typography variant="h6">Add New Skill</Typography>
+          <TextField
+            label="Name"
+            value={newSkill.name}
+            onChange={(e) => setNewSkill({ ...newSkill, name: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Skill"
+            value={newSkill.skill}
+            onChange={(e) => setNewSkill({ ...newSkill, skill: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Level</InputLabel>
+            <Select
+              value={newSkill.level}
+              onChange={(e) => setNewSkill({ ...newSkill, level: e.target.value })}
+            >
+              <MenuItem value={1}>Learns</MenuItem>
+              <MenuItem value={2}>Knows</MenuItem>
+              <MenuItem value={3}>Does</MenuItem>
+              <MenuItem value={4}>Helps</MenuItem>
+              <MenuItem value={5}>Teaches</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Experience</InputLabel>
+            <Select
+              value={newSkill.experience}
+              onChange={(e) => setNewSkill({ ...newSkill, experience: e.target.value })}
+            >
+              <MenuItem value="0-6 months">0-6 months</MenuItem>
+              <MenuItem value="6-12 months">6-12 months</MenuItem>
+              <MenuItem value="1-2 years">1-2 years</MenuItem>
+              <MenuItem value="2-4 years">2-4 years</MenuItem>
+              <MenuItem value="4-7 years">4-7 years</MenuItem>
+              <MenuItem value="7+ years">7+ years</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            label="Department"
+            value={newSkill.department}
+            onChange={(e) => setNewSkill({ ...newSkill, department: e.target.value })}
+            fullWidth
+            margin="normal"
+          />
+          <Button variant="contained" color="primary" onClick={handleAddSkill}>Add Skill</Button>
+        </Box>
+        <DataGrid rows={skills} columns={columns} />
       </Box>
     </Box>
   );

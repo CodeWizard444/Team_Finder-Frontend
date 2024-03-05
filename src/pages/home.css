@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+} 
 
 .container {
     position: relative; 
@@ -43,6 +43,7 @@
     color: transparent;
     background-image: linear-gradient(43deg,#4158D0 0%,#C850C0 46%,#FFCC70 100%);
     -webkit-background-clip: text;
+    cursor: pointer;
 }
 
  .frm-box h2{
@@ -88,7 +89,7 @@
 }
 
 .icn-close:hover {
-    background: tomato;
+    background: #090947;
 }
 
 .icn-close:active {

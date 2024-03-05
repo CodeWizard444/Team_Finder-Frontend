@@ -1,63 +1,46 @@
-import React, { useState } from 'react'
-import userImg from '../assets/user.jpg';
-import './curentproject.css';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { MdSearch } from 'react-icons/md';
-const CurentProject =() =>{
+import AddProject from '../add/addProject';
+import { Box, Typography, Button } from "@mui/material";
+
+import './curentproject.css';
+
+const CurentProject = () => {
     const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [newProjects, setNewProjects] = useState([]);
+
+    useEffect(() => {
+        const storedProjects = JSON.parse(localStorage.getItem('projects'));
+        if (storedProjects) {
+            setNewProjects(storedProjects);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('projects', JSON.stringify(newProjects));
+    }, [newProjects]);
 
     const toggleSearchBar = () => {
         setIsSearchBarVisible(!isSearchBarVisible);
     };
 
+    const handleOpen = () => {
+        setOpen(true); 
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleAddProject = (projectData) => {
+        console.log("New project added:", projectData);
+        setNewProjects([...newProjects, projectData]);
+        setOpen(false); 
+    };
+
     return (
         <div className="page">
-            
-            
-            
-            <div className="Curent-projects">
-                <div className="Project-1 ">
-                    <div className="lid one"></div>
-                    <div className="lid two"></div>
-                    <div class="envelope"></div>
-                        <div class="letter">
-                            <a href="/projectpage">Project 1</a>
-                        </div>
-                </div>
-                <div className="Project-2">
-                <div className="lid2 three"></div>
-                    <div className="lid2 four"></div>
-                    <div class="envelope2"></div>
-                        <div class="letter2">
-                            <a href="/projectpage">Project 2</a>
-                        </div>
-                </div>
-                <div className="Project-3">
-                <div className="lid3 five"></div>
-                    <div className="lid3 six"></div>
-                    <div class="envelope3"></div>
-                        <div class="letter3">
-                            <a href="/projectpage">Project 3</a>
-                        </div>
-                </div>
-                <div className="Project-4">
-                <div className="lid4 seven"></div>
-                    <div className="lid4 eight"></div>
-                    <div class="envelope4"></div>
-                        <div class="letter4">
-                            <a href="projectpage">Project 4</a>
-                        </div>
-                </div>
-                <div className="Project-5">
-                <div className="lid5 nine"></div>
-                    <div className="lid5 ten"></div>
-                    <div class="envelope5"></div>
-                        <div class="letter5">
-                            <a href="/projectpage">Project 5</a>
-                        </div>
-                </div>
-            </div>
-
             <div className="search" onClick={toggleSearchBar}>
                 <span><MdSearch className="search-icon" /></span>
             </div>
@@ -65,9 +48,31 @@ const CurentProject =() =>{
                 <input type="search" id="search-bar" placeholder="search here" />
                 <label htmlFor="search-bar"><MdSearch /></label>
             </form>
-            
+            <div className="projects">
+                <div className="info">
+                    <h1>Projects</h1>
+                    <Button variant="contained" onClick={handleOpen}>Add New Project</Button> 
+                </div>
+                <div className="new-projects">
+                    {newProjects.map((project, index) => (
+                        <div key={index} className="Project-1">
+                            <div className="lid one"></div>
+                            <div className="lid two"></div>
+                            <div className="envelope"></div>
+                            <div className="letter">
+                                <a href="/projectpage">{project.projectName}</a>
+                                <p>Deadline Date: {project.deadlineDate}</p>
+                                <p>Project Status: {project.projectStatus}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            {open && <AddProject setOpen={setOpen} slug="projects" handleAddProject={handleAddProject} />}
         </div>
-    )
-}
+    );
+};
 
 export default CurentProject;
+
+
