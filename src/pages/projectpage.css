@@ -1,5 +1,5 @@
 .pag {
-    background-image: linear-gradient(rgba(7, 211, 247, 0.916) 15%,rgb(218, 139, 152) ,rgb(218, 139, 152));
+    background-image: linear-gradient(#191714,#2234AE);
     min-height: 100vh;
     position: relative;
 }

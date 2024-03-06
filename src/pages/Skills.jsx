@@ -1,199 +1,162 @@
 import React, { useState, useEffect } from 'react';
-import { FaPlus, FaPencilAlt, FaTrash, FaCheck } from 'react-icons/fa';
-import SkillStorage from '../hooks/SkillStorage';
 import './skill.css';
-
+import { FaPlus, FaPencilAlt, FaTrash, FaCheck } from 'react-icons/fa';
 
 const Skills = () => {
-    const [skill, setSkill] = SkillStorage('skill-storage.departments',[]);
-    const [previousFocusEl, setPreviousFocusEl] = useState(null);
-    const [editedSkill, setEditedSkill] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
+  const [skills, setSkills] = useState(() => {
+    const savedSkills = localStorage.getItem('skills');
+    return savedSkills ? JSON.parse(savedSkills) : [];
+  });
+  const [formData, setFormData] = useState({
+    skillCategory: '',
+    skillName: '',
+    description: '',
+    author: '',
+    departments: ''
+  });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedSkillIndex, setEditedSkillIndex] = useState(null);
+  const [buttonPosition, setButtonPosition] = useState('bottom'); // Default position
 
-    const addSkill = (skillName) => {
-        setSkill(prevSkill => [
-            ...prevSkill,
-            {
-                name: skillName,
-                id: Date.now()
-            }
-        ]);
-    };
+  useEffect(() => {
+    localStorage.setItem('skills', JSON.stringify(skills));
+  }, [skills]);
 
-    const deleteSkill = (id) => {
-        setSkill(prevSkill => prevSkill.filter(dep => dep.id !== id));
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleAddSkill = (e) => {
+    e.preventDefault();
+    if (isEditing) {
+      // If in editing mode, update the existing skill
+      const updatedSkills = [...skills];
+      updatedSkills[editedSkillIndex] = formData;
+      setSkills(updatedSkills);
+      setIsEditing(false); // Leave editing mode only after updating skill
+      setEditedSkillIndex(null); // Reset edited skill index
+    } else {
+      setSkills([...skills, formData]);
     }
+    setFormData({
+      skillCategory: '',
+      skillName: '',
+      description: '',
+      author: '',
+      departments: ''
+    });
+  };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        addSkill(e.target.elements.skill.value);
-        e.target.reset(); 
-    };
+  const handleUpdateSkill = (index) => {
+    const skillToEdit = skills[index];
+    setFormData(skillToEdit);
+    setIsEditing(true);
+    setEditedSkillIndex(index); // Set the index of the skill being edited
+  };
 
-    const enterEditMode = (skill) => {
-        setEditedSkill(skill);
-        setIsEditing(true);
-        setPreviousFocusEl(document.activeElement);
-    }
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditedSkillIndex(null); // Reset edited skill index
+  };
 
-    const updateSkill = (updatedSkill) => {
-        setSkill(prevSkill => prevSkill.map(dep => (
-            dep.id === updatedSkill.id ? updatedSkill : dep
-        )));
-        closeEditMode();
-    }
+  const handleDeleteSkill = (index) => {
+    const updatedSkills = skills.filter((_, i) => i !== index);
+    setSkills(updatedSkills);
+  };
 
-    const closeEditMode = () => {
-        setIsEditing(false);
-        previousFocusEl.focus();
-    }
+  const handleFormFocus = () => {
+    setButtonPosition('top');
+  };
 
-    const SkillItem = ({ skilll }) => {
-        return (
-            <li className="skilll">
-                <div className="skills">
-                    {skilll.name}
-                </div>
-                <div className="skill-group">
-                    <button
-                        className='btnn-update'
-                        aria-label={`Update ${skilll.name} Task`}
-                        onClick={() => enterEditMode(skilll)}
-                    >
-                        <FaPencilAlt width={24} height={24} />
-                    </button>
+  const handleFormBlur = () => {
+    setButtonPosition('bottom');
+  };
 
-                    <button
-                        className='btnn-delete'
-                        aria-label={`Delete ${skilll.name} Task`}
-                        onClick={() => deleteSkill(skilll.id)}
-                    >
-                        <FaTrash width={24} height={24} />
+  return (
+    <div className="skill-page">
+      <form
+        className={`create-skill ${buttonPosition === 'top' ? 'form-top' : ''}`}
+        onSubmit={handleAddSkill}
+        onFocus={handleFormFocus}
+        onBlur={handleFormBlur}
+      >
+        <input
+          type="text"
+          name="skillCategory"
+          value={formData.skillCategory}
+          onChange={handleChange}
+          placeholder="Skill Category"
+        />
+        <input
+          type="text"
+          name="skillName"
+          value={formData.skillName}
+          onChange={handleChange}
+          placeholder="Skill Name"
+        />
+        <input
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Description"
+        />
+        <input
+          type="text"
+          name="author"
+          value={formData.author}
+          onChange={handleChange}
+          placeholder="Author"
+        />
+        <input
+          type="text"
+          name="departments"
+          value={formData.departments}
+          onChange={handleChange}
+          placeholder="Departments"
+        />
+        {isEditing ? (
+          <>
+            <button className="btnn-cancel" type="button" onClick={handleCancelEdit}>Cancel</button>
+            <button className="btnn" type="submit"><FaCheck /></button>
+          </>
+        ) : (
+          <button className="btnn" type="submit"><FaPlus /></button>
+        )}
+      </form>
 
-                    </button>
-                </div>
-            </li>
-        );
-    };
-
-    const SkillList = ({ skillls }) => {
-        return (
-            <ul className="skillls">
-                {skillls.sort((a, b) => b.id - a.id).map(skilll => (
-                    <SkillItem
-                        key={skilll.id}
-                        skilll={skilll}
-                        deleteSkill={deleteSkill}
-                        
-                    />
-                ))}
-            </ul>
-        );
-    };
-
-    const EditForm = ({ editedSkill, updateSkill, closeEditMode }) => {
-        const [updatedSkillName, setUpdatedSkillName] = useState(editedSkill.name);
-      
-        useEffect(()=> {
-          const closeModalIfEscaped = (e) => {
-            e.key === "Escape" && closeEditMode();
-          }
-      
-          window.addEventListener('keydown', closeModalIfEscaped)
-      
-          return () => {
-            window.removeEventListener('keydown', closeModalIfEscaped)
-          }
-        }, [closeEditMode])
-      
-        const handleFormSubmit = (e) => {
-          e.preventDefault();
-          updateSkill({...editedSkill, name: updatedSkillName})
-        }
-      
-        return (
-          <div
-            className="skill"
-            aria-labelledby="editSkill"
-            onClick={(e) => {e.target === e.currentTarget && closeEditMode()}}
-            >
-            <form
-              
-              onSubmit={handleFormSubmit}
-              >
-              <div className="wrapperrr">
-                <textarea
-                id="editSkill"
-                className="inputs"
-                value={updatedSkillName}
-                onInput={(e) => setUpdatedSkillName(e.target.value)}
-                required
-                autoFocus
-                maxLength={500}
-                placeholder="Update Skill"
-                onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                e.target.value += '\n';
-                }
-                 }}
-                ></textarea>
-                <label
-                  htmlFor="editSkill"
-                  className="label"
-                ></label>
-              </div>
-              <button
-                className="btnn"
-                aria-label={`Confirm edited task to now read ${updatedSkillName}`}
-                type="submit"
-                >
-                <FaCheck strokeWidth={2} height={24} width={24} />
-              </button>
-            </form>
-          </div>
-        )
-      };
-
-    return (
-        <div className="skill">
-            <form onSubmit={handleFormSubmit}>
-                <div className="wrapperrr">
-                <textarea
-                id="skill"
-                className="inputs"
-                required
-                autoFocus
-                maxLength={500}
-                placeholder="Create Skill"
-                onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                e.target.value += '\n';
-                }
-                 }}
-                ></textarea>
-                    <label htmlFor="skill" className="label"></label>
-                </div>
-                <button className="btnn" aria-label="Add Skill" type="submit">
-                    <span><FaPlus /></span>
-                </button>
-            </form>
-
-            {isEditing && (
-                <EditForm
-                    editedSkill={editedSkill}
-                    updateSkill={updateSkill}
-                    closeEditMode={closeEditMode}
-                />
-            )}
-
-            <SkillList 
-            skillls={skill} 
-            deleteSkill={deleteSkill}
-            />
-        </div>
-    );
+      <table className="skill-table">
+        <thead>
+          <tr>
+            <th>Skill Category</th>
+            <th>Skill Name</th>
+            <th>Description</th>
+            <th>Author</th>
+            <th>Departments</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {skills.map((skill, index) => (
+            <tr key={index}>
+              <td>{skill.skillCategory}</td>
+              <td>{skill.skillName}</td>
+              <td>{skill.description}</td>
+              <td>{skill.author}</td>
+              <td>{skill.departments}</td>
+              <td>
+                <button className="btnn-update" type="button" onClick={() => handleUpdateSkill(index)}><FaPencilAlt /></button>
+                <button className="btnn-delete" type="button" onClick={() => handleDeleteSkill(index)}><FaTrash /></button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default Skills;

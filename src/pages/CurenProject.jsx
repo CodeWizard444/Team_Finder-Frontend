@@ -54,19 +54,19 @@ const CurentProject = () => {
                     <Button variant="contained" onClick={handleOpen}>Add New Project</Button> 
                 </div>
                 <div className="new-projects">
-                    {newProjects.map((project, index) => (
-                        <div key={index} className="Project-1">
-                            <div className="lid one"></div>
-                            <div className="lid two"></div>
-                            <div className="envelope"></div>
-                            <div className="letter">
-                                <a href="/projectpage">{project.projectName}</a>
-                                <p>Deadline Date: {project.deadlineDate}</p>
-                                <p>Project Status: {project.projectStatus}</p>
-                            </div>
+                    {newProjects.slice().reverse().map((project, index) => ( 
+                    <div key={index} className="Project-1">
+                        <div className="lid one"></div>
+                        <div className="lid two"></div>
+                        <div className="envelope"></div>
+                        <div className="letter">
+                            <a href="/projectpage">{project.projectName}</a>
+                            <p>Deadline Date: {project.deadlineDate}</p>
+                            <p>Project Status: {project.projectStatus}</p>
                         </div>
-                    ))}
-                </div>
+                        </div>
+                        ))}
+                    </div>
             </div>
             {open && <AddProject setOpen={setOpen} slug="projects" handleAddProject={handleAddProject} />}
         </div>

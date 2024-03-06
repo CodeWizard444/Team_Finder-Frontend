@@ -24,7 +24,7 @@
     justify-content: center;
     z-index: 0;
     margin-right: 100px; 
-    margin-bottom: 20px;
+    margin-bottom: 100px;
   }
   
   .lid {
@@ -205,7 +205,7 @@
     display: flex; 
     flex-wrap: wrap; 
     justify-content: flex-start; 
-    max-width: 1000px; 
+    max-width: 1400px; 
     margin: 0 auto;
 }
 
