@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './skill.css';
 import { FaPlus, FaPencilAlt, FaTrash, FaCheck } from 'react-icons/fa';
+import { FaUsers } from 'react-icons/fa';
 
 const Skills = () => {
   const [skills, setSkills] = useState(() => {
@@ -16,7 +17,7 @@ const Skills = () => {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editedSkillIndex, setEditedSkillIndex] = useState(null);
-  const [buttonPosition, setButtonPosition] = useState('bottom'); // Default position
+  const [buttonPosition, setButtonPosition] = useState('bottom');
 
   useEffect(() => {
     localStorage.setItem('skills', JSON.stringify(skills));
@@ -32,14 +33,13 @@ const Skills = () => {
   const handleAddSkill = (e) => {
     e.preventDefault();
     if (isEditing) {
-      // If in editing mode, update the existing skill
       const updatedSkills = [...skills];
       updatedSkills[editedSkillIndex] = formData;
       setSkills(updatedSkills);
-      setIsEditing(false); // Leave editing mode only after updating skill
-      setEditedSkillIndex(null); // Reset edited skill index
+      setIsEditing(false);
+      setEditedSkillIndex(null);
     } else {
-      setSkills([...skills, formData]);
+      setSkills([formData, ...skills]); 
     }
     setFormData({
       skillCategory: '',
@@ -54,18 +54,30 @@ const Skills = () => {
     const skillToEdit = skills[index];
     setFormData(skillToEdit);
     setIsEditing(true);
-    setEditedSkillIndex(index); // Set the index of the skill being edited
+    setEditedSkillIndex(index);
   };
 
   const handleCancelEdit = () => {
     setIsEditing(false);
-    setEditedSkillIndex(null); // Reset edited skill index
+    setEditedSkillIndex(null);
   };
 
   const handleDeleteSkill = (index) => {
     const updatedSkills = skills.filter((_, i) => i !== index);
     setSkills(updatedSkills);
   };
+
+  const handleAssignToDepartment = (index) => {
+    const updatedSkills = [...skills];
+    // Here you can add the logic to assign the skill to a department.
+    // For demonstration, let's say we update the departments field of the skill.
+    updatedSkills[index] = {
+      ...updatedSkills[index],
+      departments: 'Assigned Department' // Update with your actual logic
+    };
+    setSkills(updatedSkills);
+  };
+  
 
   const handleFormFocus = () => {
     setButtonPosition('top');
@@ -139,21 +151,22 @@ const Skills = () => {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
-          {skills.map((skill, index) => (
-            <tr key={index}>
-              <td>{skill.skillCategory}</td>
-              <td>{skill.skillName}</td>
-              <td>{skill.description}</td>
-              <td>{skill.author}</td>
-              <td>{skill.departments}</td>
-              <td>
-                <button className="btnn-update" type="button" onClick={() => handleUpdateSkill(index)}><FaPencilAlt /></button>
-                <button className="btnn-delete" type="button" onClick={() => handleDeleteSkill(index)}><FaTrash /></button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody className="contain">
+        {skills.map((skill, index) => (
+    <tr key={index}>
+      <td>{skill.skillCategory}</td>
+      <td>{skill.skillName}</td>
+      <td>{skill.description}</td>
+      <td>{skill.author}</td>
+      <td>{skill.departments}</td>
+      <td>
+        <button className="btnn-update" type="button" onClick={() => handleUpdateSkill(index)}><FaPencilAlt /></button>
+        <button className="btnn-delete" type="button" onClick={() => handleDeleteSkill(index)}><FaTrash /></button>
+        <button className="btnn-assign" type="button" onClick={() => handleAssignToDepartment(index)}><FaUsers /></button>
+      </td>
+    </tr>
+  ))}
+</tbody>
       </table>
     </div>
   );

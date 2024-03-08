@@ -52,13 +52,13 @@ const Departments = () => {
         return (
             <li className="depp">
                 <div className="departmentt">
-                <Link to="/about" className="department-link">
+                <Link to="/depmanager" className="department-link">
                     {depp.name}
                 </Link>
                 </div>
                 <div className="dep-group">
                     <button
-                        className='btnn-update'
+                        className='btnnn-update'
                         aria-label={`Update ${depp.name} Task`}
                         onClick={() => enterEditMode(depp)}
                     >
@@ -66,7 +66,7 @@ const Departments = () => {
                     </button>
 
                     <button
-                        className='btnn-delete'
+                        className='btnnn-delete'
                         aria-label={`Delete ${depp.name} Task`}
                         onClick={() => deleteDepartment(depp.id)}
                     >
@@ -141,7 +141,7 @@ const Departments = () => {
                 ></label>
               </div>
               <button
-                className="btnn"
+                className="btnnn"
                 aria-label={`Confirm edited task to now read ${updatedDepartmentName}`}
                 type="submit"
                 >
@@ -167,7 +167,7 @@ const Departments = () => {
                     />
                     <label htmlFor="department" className="label"></label>
                 </div>
-                <button className="btnn" aria-label="Add Department" type="submit">
+                <button className="btnnn" aria-label="Add Department" type="submit">
                     <span><FaPlus /></span>
                 </button>
             </form>

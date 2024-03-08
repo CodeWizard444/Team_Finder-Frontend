@@ -12,6 +12,7 @@ import Departments from './pages/Departments';
 import Skills from './pages/Skills';
 import Sidebar from './pages/Sidebar';
 import EmployeeSkills from './pages/EmployeeSkills';
+import DepManager from './pages/DepManager';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
@@ -43,6 +44,7 @@ ReactDOM.render(
             <Route path="/skills" element={<Skills />} />
             <Route path="/sidebar" element={<Sidebar />} />
             <Route path="/employeeskills" element={<EmployeeSkills />} />
+            <Route path="/depmanager" element={<DepManager />} />
           </Routes>
         </main>
       </div>

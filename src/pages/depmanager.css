@@ -1,0 +1,31 @@
+.manager-view
+{
+    display: flex;
+    min-height: 100vh;
+    background-image: linear-gradient(#191714,#2234AE);
+}
+
+.department-skills
+{
+    display: flex;
+    height: 400px;
+    width: 400px;
+    background-color: white;
+    border-radius: .5em;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    top: 10px;
+    left: 40px;
+}
+
+.department-skills
+{
+    display: flex;
+}
+
+.header-title
+{
+    font-size: 1.5em;
+    color: #090947;
+}

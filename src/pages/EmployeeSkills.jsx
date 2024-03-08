@@ -2,17 +2,26 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { blue, green } from "@mui/material/colors";
-import { v4 as uuidv4 } from 'uuid'; 
 
 const EmployeeSkills = () => {
   const [skills, setSkills] = useState(() => {
-    const storedSkills = localStorage.getItem('skills');
-    return storedSkills ? JSON.parse(storedSkills) : [];
+    const storedSkills = localStorage.getItem('employeeSkills'); 
+    if (storedSkills) {
+      const parsedSkills = JSON.parse(storedSkills);
+      const skillsWithIds = parsedSkills.map((skill, index) => ({
+        ...skill,
+        id: skill.id || index.toString(), 
+      }));
+      return skillsWithIds;
+    }
+    return [];
   });
 
   useEffect(() => {
-    localStorage.setItem('skills', JSON.stringify(skills));
+    localStorage.setItem('employeeSkills', JSON.stringify(skills)); 
   }, [skills]);
+
+  const getRowId = (row) => row.id;
 
   const columns = [
     { field: "id", headerName: "ID", hide: true },
@@ -24,7 +33,6 @@ const EmployeeSkills = () => {
   ];
 
   const [newSkill, setNewSkill] = useState({
-    id: "",
     name: "",
     skill: "",
     level: "",
@@ -33,11 +41,10 @@ const EmployeeSkills = () => {
   });
 
   const handleAddSkill = () => {
-    const id = uuidv4();
+    const id = Math.random().toString(36).substring(7);
     const newSkillWithId = { ...newSkill, id }; 
     setSkills([...skills, newSkillWithId]);
     setNewSkill({
-      id: "",
       name: "",
       skill: "",
       level: "",
@@ -45,7 +52,7 @@ const EmployeeSkills = () => {
       department: "",
     });
   };
-
+  
   return (
     <Box ml="280px" bgcolor="#f0f0f0">
       <Box
@@ -129,7 +136,7 @@ const EmployeeSkills = () => {
           />
           <Button variant="contained" color="primary" onClick={handleAddSkill}>Add Skill</Button>
         </Box>
-        <DataGrid rows={skills} columns={columns} />
+        <DataGrid rows={skills} columns={columns} getRowId={getRowId} />
       </Box>
     </Box>
   );

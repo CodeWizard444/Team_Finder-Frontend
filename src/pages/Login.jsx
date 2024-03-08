@@ -49,7 +49,7 @@ const Login = () => {
                             <label><input type="checkbox" />Remember me</label>
                             <a href="#">Forgot Password?</a>
                         </div>
-                        <button type="submit" className="btnn">Login</button>
+                        <button type="submit" className="btnn1">Login</button>
                         <div className="login-registerr">
                             <p>Don't have an account?
                                 <button type="button" className="register-linkk" onClick={handleRegisterButtonClick}>Register</button>
@@ -79,7 +79,7 @@ const Login = () => {
                         <div className="remember-forgott">
                             <label><input type="checkbox" />I agree with the terms & conditions</label>
                         </div>
-                        <button type="submit" className="btnn">Register</button>
+                        <button type="submit" className="btnn1">Register</button>
                         <div className="login-registerr">
                             <p>Already have an account?
                                 <button type="button" className="register-linkk" onClick={handleLoginButtonClick}>Login</button>

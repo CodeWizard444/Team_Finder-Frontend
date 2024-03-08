@@ -33,7 +33,7 @@
     color: #666;
 }
 
-.btnn {
+.btnnn {
     position: absolute;
     top: 80px;
     width: 40px;
@@ -52,12 +52,12 @@
     right: 510px;
 }
 
-.btnn:hover {
+.btnnn:hover {
     background-color: #0056b3;
     color: white;
 }
 
-.btnn span {
+.btnnn span {
     margin-right: 5px;
 }
 
@@ -99,7 +99,7 @@
     line-height: 1.4;
   }
 
-.btnn-update
+.btnnn-update
 {
     position: relative;
     width: 40px;
@@ -117,7 +117,7 @@
     transition: background-color 0.3s ease;
 }
 
-.btnn-delete
+.btnnn-delete
 {
     position: relative;
     width: 40px;
@@ -135,13 +135,13 @@
     transition: background-color 0.3s ease;
 }
 
-.btnn-update:hover
+.btnnn-update:hover
 {
     background-color: green;
     color: white;
 }
 
-.btnn-delete:hover
+.btnnn-delete:hover
 {
     background-color: red;
     color: white;
