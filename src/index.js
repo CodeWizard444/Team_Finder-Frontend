@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ import DepManager from './pages/DepManager';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
+
 function RenderAbout() {
   const location = useLocation();
   const allowedPaths = ['/home', '/curentproject','/employeeskills']; 
@@ -23,6 +24,7 @@ function RenderAbout() {
   if (allowedPaths.includes(location.pathname)) {
     return <Sidebar />;
   }
+
   
   return null;
 }
@@ -44,7 +46,7 @@ ReactDOM.render(
             <Route path="/skills" element={<Skills />} />
             <Route path="/sidebar" element={<Sidebar />} />
             <Route path="/employeeskills" element={<EmployeeSkills />} />
-            <Route path="/depmanager" element={<DepManager />} />
+            <Route path="/depmanager" element={<DepManager  />} />
           </Routes>
         </main>
       </div>

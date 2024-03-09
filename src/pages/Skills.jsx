@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './skill.css';
 import { FaPlus, FaPencilAlt, FaTrash, FaCheck } from 'react-icons/fa';
 import { FaUsers } from 'react-icons/fa';
+import { Link} from 'react-router-dom';
+
+
+
 
 const Skills = () => {
   const [skills, setSkills] = useState(() => {
@@ -18,7 +22,7 @@ const Skills = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedSkillIndex, setEditedSkillIndex] = useState(null);
   const [buttonPosition, setButtonPosition] = useState('bottom');
-
+  const [assignedSkills, setAssignedSkills] = useState([])
   useEffect(() => {
     localStorage.setItem('skills', JSON.stringify(skills));
   }, [skills]);
@@ -67,16 +71,11 @@ const Skills = () => {
     setSkills(updatedSkills);
   };
 
-  const handleAssignToDepartment = (index) => {
-    const updatedSkills = [...skills];
-    // Here you can add the logic to assign the skill to a department.
-    // For demonstration, let's say we update the departments field of the skill.
-    updatedSkills[index] = {
-      ...updatedSkills[index],
-      departments: 'Assigned Department' // Update with your actual logic
-    };
-    setSkills(updatedSkills);
+
+  const handleAssignToDepartment = (assignedSkillName) => {
+    setAssignedSkills([...assignedSkills, assignedSkillName]);
   };
+  
   
 
   const handleFormFocus = () => {
@@ -162,12 +161,14 @@ const Skills = () => {
       <td>
         <button className="btnn-update" type="button" onClick={() => handleUpdateSkill(index)}><FaPencilAlt /></button>
         <button className="btnn-delete" type="button" onClick={() => handleDeleteSkill(index)}><FaTrash /></button>
-        <button className="btnn-assign" type="button" onClick={() => handleAssignToDepartment(index)}><FaUsers /></button>
+        <button className="btnn-assign" type="button" onClick={() => handleAssignToDepartment(skill.skillName)}><FaUsers /></button>
+
       </td>
     </tr>
   ))}
 </tbody>
       </table>
+      <Link to="/depmanager"></Link>
     </div>
   );
 };

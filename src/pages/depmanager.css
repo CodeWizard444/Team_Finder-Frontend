@@ -13,19 +13,99 @@
     background-color: white;
     border-radius: .5em;
     position: relative;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; 
+    align-items: flex-start;
     top: 10px;
     left: 40px;
 }
 
-.department-skills
-{
-    display: flex;
-}
 
 .header-title
 {
     font-size: 1.5em;
     color: #090947;
+}
+
+.header-titles
+{
+    position: absolute;
+    font-size: 1.5em;
+    color: white;
+    right: 80px;
+}
+
+.header-titles-1
+{
+    position: absolute;
+    font-size: 1.5em;
+    color: white;
+    left: 43%;
+}
+
+
+.no-dep-tableee
+{
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    width: 400px;
+    height: 370px;
+    overflow-y: auto;
+    border-collapse: collapse;
+
+}
+
+.dep-tableee 
+{
+    position: absolute;
+    top: 30px;
+    left: 37%;
+    height: 370px;
+    width: 400px;
+    overflow-y: auto;
+    border-collapse: collapse;
+}
+
+.hdr th{
+    background-color: #090947; 
+    color: #FFF;
+}
+
+th, td {
+    border: 1px solid #FFF; 
+    padding: 8px;
+}
+
+
+
+
+
+.dep-btnn-p,
+.dep-btnn-t
+{
+    width: 40px;
+    height: 40px;
+    align-items: center; 
+    justify-content: center; 
+    gap: 0.5em;
+    background-color: white;
+    color: cadetblue;
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: .3em ;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 8px;
+}
+
+.dep-btnn-p:hover
+{
+    background-color:#090947;
+    color: white;
+}
+
+.dep-btnn-t:hover
+{
+    background-color:rgb(213, 12, 12);
+    color: white;
 }

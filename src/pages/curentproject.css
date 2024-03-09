@@ -106,7 +106,7 @@
   top: 50px; 
   right: 50px;
   z-index: 1000;
-  width: 450px;
+  width: 480px;
   height: 500px;
   border-radius: .5em;
   overflow-y: auto; 
@@ -115,7 +115,7 @@
 .employees-header {
   display: flex;
   justify-content: space-between;
-  background-color: #7b7474; 
+  background-color: #ddd8d8; 
   border-bottom: 2px solid #090947; 
   padding: 8px 0;
 }
@@ -153,5 +153,60 @@
 
 .employee-info-hours
 {
-    width: 40px;
+    width: 50px;
 }
+
+.btnn-prop
+{
+    width: 40px;
+    height: 40px;
+    align-items: center; 
+    justify-content: center; 
+    gap: 0.5em;
+    background-color: white;
+    color: cadetblue;
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: .3em ;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 8px;
+}
+
+.btnn-prop:hover
+{
+    background-color:#090947;
+    color: white;
+}
+
+.proposal-dialog {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-10%, -70%);
+  z-index: 9999;
+  background-color: #ddd8d8;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.proposal-dialog  div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.proposal-dialog label {
+  width: 120px; 
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.proposal-dialog input {
+  flex: 1;
+}
+

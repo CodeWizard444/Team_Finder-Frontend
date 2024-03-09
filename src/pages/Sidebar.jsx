@@ -22,7 +22,7 @@ const Sidebar = () => {
                     <li className="nav-item">
                         <a href="/home" className="nav-link active" aria-current="page">
                             <svg className="nav-icon pe-none me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
-                            Dashboard
+                            Home
                         </a>
                     </li>
                     <li>

@@ -54,6 +54,7 @@ const EmployeeSkills = () => {
   };
   
   return (
+    <div className="pg">
     <Box ml="280px" bgcolor="#f0f0f0">
       <Box
         m="0 0 0 0"
@@ -139,6 +140,7 @@ const EmployeeSkills = () => {
         <DataGrid rows={skills} columns={columns} getRowId={getRowId} />
       </Box>
     </Box>
+    </div>
   );
 };
 

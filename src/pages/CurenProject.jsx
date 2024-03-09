@@ -3,6 +3,7 @@ import AddProject from '../add/addProject';
 import { Box, Typography, Button } from "@mui/material";
 import mockData from '../data/mockData';
 import './curentproject.css';
+import { FaPlus } from 'react-icons/fa';
 
 const CurentProject = () => {
     const [open, setOpen] = useState(false);
@@ -16,6 +17,9 @@ const CurentProject = () => {
     const [closeToFinishWeeks, setCloseToFinishWeeks] = useState(4);
     const [includeUnavailable, setIncludeUnavailable] = useState(false);
     const [showFilterOptions, setShowFilterOptions] = useState(false); 
+    const [workHours, setWorkHours] = useState('');
+    const [roles, setRoles] = useState('');
+    const [comments, setComments] = useState('');
 
     useEffect(() => {
         const storedProjects = JSON.parse(localStorage.getItem('projects'));
@@ -92,11 +96,31 @@ const CurentProject = () => {
         return false;
     };
 
+    const [openProposeDialog, setOpenProposeDialog] = useState(false);
+
+    const handleProposeForProject = (employee) => {
+
+        setOpenProposeDialog(true);
+    };
+
+    const handleSubmit = () => {
+
+        console.log("Work Hours:", workHours);
+        console.log("Roles:", roles);
+        console.log("Comments:", comments);
+
+        setWorkHours('');
+        setRoles('');
+        setComments('');
+
+        setOpenProposeDialog(false);
+    };
+
     return (
         <div className="pages">
             <div className="projects">
                 <div className="info">
-                    <h1>Projects</h1>
+                    
                     <Button variant="contained" onClick={() => setOpen(true)}>Add New Project</Button> 
                     <Button variant="contained" onClick={handleSearchButtonClick}>Search</Button> 
                 </div>
@@ -145,6 +169,7 @@ const CurentProject = () => {
                             <span className="header-item">Department</span>
                             <span className="header-item">Projects</span>
                             <span className="header-item">Hours</span>
+                            <span className="header-item">Action</span>
                         </div>
                         <div className="dropdown">
                         <Button variant="contained" onClick={() => setShowFilterOptions(prevState => !prevState)}>Filter Options</Button>
@@ -194,9 +219,32 @@ const CurentProject = () => {
                                     <span className="employee-info">{employee.department}</span>
                                     <span className="employee-info">{employee.projects.map(project => project.name).join(', ')}</span>
                                     <span className="employee-info-hours">{employee.projects.reduce((total, project) => total + project.hours, 0)}</span>
+                                    {employee.projects.reduce((total, project) => total + project.hours, 0) < 8 && ( 
+                                    <button className="btnn-prop" variant="contained" onClick={() => handleProposeForProject(employee)}><FaPlus /></button> 
+                                        )}
                                 </div>
                             )
                         ))}
+                        {openProposeDialog && (
+                <div className="proposal-dialog">
+                    <h2>Propose for Project</h2>
+                    <div>
+                        <label htmlFor="workHours">Work Hours:</label>
+                        <input type="number" id="workHours" value={workHours} onChange={(e) => setWorkHours(Math.max(1, Math.min(8, e.target.value)))} min={1} max={8} />
+                    </div>
+                    <div>
+                        <label htmlFor="roles">Roles:</label>
+                        <input type="text" id="roles" value={roles} onChange={(e) => setRoles(e.target.value)} />
+                    </div>
+                    <div>
+                        <label htmlFor="comments">Comments:</label>
+                        <input type="text" id="comments" value={comments} onChange={(e) => setComments(e.target.value)} />
+                    </div>
+                    <div>
+                        <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+                    </div>
+                </div>
+            )}
                     </div>
                 </div>
             )}
