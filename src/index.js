@@ -1,8 +1,9 @@
-import React,{ useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 import App from './App';
+import { AuthProvider } from './auth/AuthContext';
 import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
@@ -13,13 +14,15 @@ import Skills from './pages/Skills';
 import Sidebar from './pages/Sidebar';
 import EmployeeSkills from './pages/EmployeeSkills';
 import DepManager from './pages/DepManager';
+import Admin from './pages/Admin';
+import MyProjects from './pages/MyProjects';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 
 function RenderAbout() {
   const location = useLocation();
-  const allowedPaths = ['/home', '/curentproject','/employeeskills']; 
+  const allowedPaths = ['/home', '/curentproject','/employeeskills','/admin']; 
 
   if (allowedPaths.includes(location.pathname)) {
     return <Sidebar />;
@@ -32,6 +35,7 @@ function RenderAbout() {
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+    <AuthProvider>
       <div>
         <main>
           <RenderAbout /> 
@@ -47,9 +51,12 @@ ReactDOM.render(
             <Route path="/sidebar" element={<Sidebar />} />
             <Route path="/employeeskills" element={<EmployeeSkills />} />
             <Route path="/depmanager" element={<DepManager  />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="myprojects" element={<MyProjects />} />
           </Routes>
         </main>
       </div>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

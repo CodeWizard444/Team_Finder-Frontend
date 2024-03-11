@@ -3,6 +3,9 @@ import './depmanager.css';
 import mockData from '../data/mockData';
 import { FaPlus, FaTrash} from 'react-icons/fa';
 
+import { Box } from '@mui/material';
+import Chart from '../chart/Chart';
+
 const DepManager = ({/* assignedSkills*/ }) => {
     const [employeesWithDepartments, setEmployeesWithDepartments] = useState([]);
     const [employeesWithoutDepartments, setEmployeesWithoutDepartments] = useState([]);
@@ -84,6 +87,11 @@ const DepManager = ({/* assignedSkills*/ }) => {
                     </tbody>
                 </table>
             </div>
+            <Box m="20px">
+                <Box>
+                    <Chart />
+                </Box>
+            </Box>
         </div>
     );
 };

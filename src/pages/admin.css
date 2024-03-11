@@ -1,0 +1,137 @@
+.adm-pg
+{
+    display: flex;
+    min-height: 100vh;
+    background-image: linear-gradient(89.5deg, rgb(4, 29, 55) -0.1%, rgb(2, 67, 135) 25.1%, rgb(28, 133, 243) 49.6%, rgb(115, 181, 250) 74.5%, rgb(214, 239, 253) 99.3%);
+}
+
+.adm-pg h2
+{
+    position: absolute;
+    display: flex;
+    font-size: 3em;
+    left: 280px;
+    color:white;
+}
+
+.promote-demote
+{
+    position: absolute;
+    background-color: white;
+    position: relative;
+    top: 90px; 
+    left: 280px;
+    width: 380px;
+    height: 350px;
+    border-radius: .5em;
+    overflow-y: auto; 
+}
+
+.boxx-header
+{
+    display: flex;
+    justify-content: space-around;
+    background-color: #ddd8d8; 
+    border-bottom: 2px solid #090947; 
+    padding: 8px 0;
+}
+
+.fnc-item
+{
+    font-weight: 600;
+    color: #090947;
+}
+
+
+
+.employee-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.employee-item span {
+    flex: 1; 
+    text-align: center; 
+}
+
+.employee-item::after {
+    content: '';
+    height: 35px;
+    width: 1px; 
+    background-color: #090947;
+    position: absolute;
+    top: 0; 
+    right: 50%; 
+    transform: translateX(50%);
+}
+
+.add-btnn
+{
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    width: 40px;
+    height: 40px;
+    align-items: center; 
+    justify-content: center; 
+    gap: 0.5em;
+    background-color: white;
+    color: cadetblue;
+    text-decoration: none;
+    padding: 0.5em;
+    border: 2px solid #090947;
+    border-radius: .3em ;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-btnn:hover
+{
+    background-color: #090947;
+    color: white;
+}
+
+.create-roles
+{
+    position: absolute;
+    background-color: white;
+    top: 90px; 
+    right: 50px;
+    width: 380px;
+    height: 350px;
+    border-radius: .5em;
+    overflow-y: auto; 
+}
+
+.add-role-container
+{
+    position: absolute;
+    top: 40px;
+    width: 330px;
+    border: 2px solid #090947;
+    border-radius: .5em;
+    display: flex;
+    overflow: hidden;
+    right: 100px;
+}
+
+.inp
+{
+    padding: 10px;
+    border: 1px solid white;
+    width: 100%; 
+    outline: none;
+}
+
+.itm
+{
+    font-weight: 600;
+    color: #090947;
+}
+
+.role-item {
+    font-size: 1.1em;
+    font-weight: 600;
+}

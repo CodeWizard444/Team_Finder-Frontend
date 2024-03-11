@@ -38,7 +38,7 @@ const Sidebar = () => {
                         </a>
                     </li>
                     <li>
-                        <a href="#" className="nav-link text-white">
+                        <a href="/admin" className="nav-link text-white">
                             <svg className="nav-icon pe-none me-2" width="16" height="16"><use xlinkHref="#people-circle"></use></svg>
                             Admin
                         </a>
@@ -51,7 +51,7 @@ const Sidebar = () => {
                         <strong>user</strong>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item href="/about">New project...</Dropdown.Item>
+                        <Dropdown.Item href="/myprojects">My projects</Dropdown.Item>
                         <Dropdown.Item href="#">Profile</Dropdown.Item>
                         <Dropdown.Divider />
                     </Dropdown.Menu>
