@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import { MdMail, MdLock } from 'react-icons/md';
 import { IoIosPerson } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext';
 import './login.css';
+import axios from 'axios';
+import { employeeRegister, login } from '../api/auth';
+import { useDispatch } from 'react-redux';
+import { authenticateUser } from '../redux/slices/authSlice';
+
 
 
 const Login = () => {
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLoginButtonClick = () => {
         setShowLoginForm(true);
@@ -21,77 +26,82 @@ const Login = () => {
         setShowRegisterForm(true);
     }
 
-    const { token } = useAuth();
-
-    console.log(token);
-    const handleSubmit = async (e) => {
+    
+    const handleLoginSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
         const formDataObj = Object.fromEntries(formData.entries());
 
         try {
-            const loginResponse = await fetch('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/login', {
-                method: 'POST',
-                headers: {
+            const loginResponse = await login({ email: formDataObj.email, password: formDataObj.password });
 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({name: formDataObj.name, email: formDataObj.email, password: formDataObj.password }),
-            });
-
-            if (loginResponse.ok) {
-                const loginData = await loginResponse.json();
-                if (loginData.success) {
-                    console.log(loginData);
-                    navigate('/home');
-                } else {
-                    console.error('Login failed:', loginData.error);
-                }
+            if (loginResponse.status === 200) {
+                dispatch(authenticateUser());
+                localStorage.setItem('isAuth', 'true'); // Salvăm starea de autentificare în localStorage   
+                localStorage.removeItem('token');
+                localStorage.setItem('token', loginResponse.data.token);
+                
+                
+                navigate('/home');
             } else {
-                console.error('Error in login request');
+                console.error('Login failed:', loginResponse.data.error);
             }
         } catch (error) {
             console.error('Error in login request:', error.message);
         }
+    };
 
-
+    const handleRegisterSubmit = async (e) => {
+        e.preventDefault();
+    
+        const formData = new FormData(e.target);
+        const formDataObj = Object.fromEntries(formData.entries());
+    
         try {
-            const signupResponse = await fetch('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/employee/signup', {
-                method: 'POST',
+            const token = localStorage.getItem('token'); // Extrage token-ul din localStorage
+    
+            const config = {
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({name: formDataObj.name, email: formDataObj.email, password: formDataObj.password }),
-            });
-
-            if (signupResponse.ok) {
-                const signupData = await signupResponse.json();
-                if (signupData.success) {
-                    console.log(signupData);
-                    navigate('/home');
-                } else {
-                    console.error('Registration failed:', signupData.error);
+                    'Authorization': `Bearer ${token}` // Adaugă token-ul în header-ul 'Authorization'
                 }
+            };
+    
+            const signupResponse = await employeeRegister({ // Mutăm definiția variabilei config aici
+                name: formDataObj.name,
+                email: formDataObj.email,
+                password: formDataObj.password,
+                organization_name: formDataObj.organization_name,
+                hq_adress: formDataObj.hq_adress,
+            }, config); // Transmitem config ca al doilea argument către employeeRegister
+    
+            if (signupResponse.status === 201) {
+                dispatch(authenticateUser());
+                localStorage.setItem('isAuth', 'true');
+                localStorage.removeItem('token');
+                localStorage.setItem('token', signupResponse.data.token);
+                navigate('/home');
             } else {
-                console.error('Error in registration request');
+                console.log(signupResponse)
+                console.error('Registration failed:', signupResponse.data.error);
             }
         } catch (error) {
             console.error('Error in registration request:', error.message);
         }
     };
+    
+
 
     return (
         <div className="wrapperLogin">
             <div className="wrapperr">
                 <div className="form-box loginn">
                     <h2>Login</h2>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleLoginSubmit}>
                         <div className="input-boxx">
                             <span className="icon"><IoIosPerson /></span>
                             <input type="text" name="name" required />
+                            
                             <label>Name</label>
                         </div>
                         <div className="input-boxx">
@@ -122,7 +132,7 @@ const Login = () => {
                     <div className="wrapperr">
                     <div className="form-box registerr">
                         <h2>Registration</h2>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleRegisterSubmit}>
                         <div className="input-boxx">
                             <span className="icon"><IoIosPerson /></span>
                             <input type="text" name="name" required />

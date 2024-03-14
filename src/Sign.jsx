@@ -4,7 +4,7 @@ import './sign.css';
 const Sign = () =>{
     return (
         <div className="Sign">
-            <h2><span className="team">TEAM</span> <span className="findr">FINDR</span></h2>
+            <h2><span className="team">TEAMFINDR</span></h2>
         </div>
     )
 }

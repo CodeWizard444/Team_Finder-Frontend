@@ -1,6 +1,6 @@
 
-
 .sidebar {
+    
     position: absolute;
     top: 0;
     left: 0;
@@ -67,7 +67,7 @@
 
 .dropdown-menu {
     position: absolute;
-    top: 20%;
+    margin-top: -300px;
     left: 0;
     z-index: 1000;
     display: none;

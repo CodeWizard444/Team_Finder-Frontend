@@ -12,18 +12,21 @@
     width: 400px;
     background-color: white;
     border-radius: .5em;
-    position: relative;
+    position: absolute;
     justify-content: center; 
     align-items: flex-start;
-    top: 10px;
+    top: 30px;
     left: 40px;
 }
 
 
 .header-title
 {
+    position: absolute;
     font-size: 1.5em;
-    color: #090947;
+    color: white;
+    left: 100px;
+    top: -30px;
 }
 
 .header-titles
@@ -49,7 +52,7 @@
     top: 30px;
     right: 40px;
     width: 400px;
-    height: 370px;
+    height: 400px;
     overflow-y: auto;
     border-collapse: collapse;
 
@@ -57,10 +60,11 @@
 
 .dep-tableee 
 {
+    
     position: absolute;
     top: 30px;
     left: 37%;
-    height: 370px;
+    height: 400px;
     width: 400px;
     overflow-y: auto;
     border-collapse: collapse;
@@ -69,13 +73,24 @@
 .hdr th{
     background-color: #090947; 
     color: #FFF;
+
 }
 
 th, td {
     border: 1px solid #FFF; 
     padding: 8px;
+    width: 400px;
 }
 
+table {
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+tbody {
+    flex-grow: 1; 
+}
 
 
 
@@ -108,4 +123,17 @@ th, td {
 {
     background-color:rgb(213, 12, 12);
     color: white;
+}
+
+.chart-data
+{
+    margin-left: 500px;
+    margin-top: 550px;
+}
+
+.chart-data-header
+{
+    font-size: 1.5em;
+    color: white;
+    margin-left: 100px;
 }

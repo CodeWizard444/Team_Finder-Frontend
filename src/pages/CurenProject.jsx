@@ -130,7 +130,7 @@ const CurentProject = () => {
                         const currentIndex = originalIndexOrder[originalIndex];
                         return (
                             <div key={currentIndex} className="Project-1">
-                                <a href="/projectpage">{project.projectName}</a>
+                                <a href="/projectpage" >{project.projectName}</a>
                                 <p>Deadline Date: {project.deadlineDate}</p>
                                 <label htmlFor={`status-${currentIndex}`}>Project Status:</label>
                                 <select

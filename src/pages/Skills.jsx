@@ -3,6 +3,7 @@ import './skill.css';
 import { FaPlus, FaPencilAlt, FaTrash, FaCheck } from 'react-icons/fa';
 import { FaUsers } from 'react-icons/fa';
 import { Link} from 'react-router-dom';
+import axios from 'axios';
 
 
 
@@ -13,10 +14,10 @@ const Skills = () => {
     return savedSkills ? JSON.parse(savedSkills) : [];
   });
   const [formData, setFormData] = useState({
-    skillCategory: '',
-    skillName: '',
+    category_id: '',
+    skill_name: '',
     description: '',
-    author: '',
+    user: '',
     departments: ''
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -34,25 +35,60 @@ const Skills = () => {
     });
   };
 
-  const handleAddSkill = (e) => {
+
+  const handleAddSkill = async (e) => {
     e.preventDefault();
-    if (isEditing) {
-      const updatedSkills = [...skills];
-      updatedSkills[editedSkillIndex] = formData;
-      setSkills(updatedSkills);
-      setIsEditing(false);
-      setEditedSkillIndex(null);
-    } else {
-      setSkills([formData, ...skills]); 
+    const { skillCategory, skillName, description, departments } = formData;
+
+  
+    try {
+      const token = localStorage.getItem('token');
+      
+      const response = await axios.post('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/create', {
+        category_name: skillCategory,
+        skill_name: skillName,
+        description: description,
+        departments: departments // Trimite array-ul direct, fără a-l converti în format JSON
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (response.status === 201) {
+        
+        const {skill_name, description, category_id} = response.data.skill.details;
+
+      // Creează un obiect skill cu informațiile suplimentare
+      const newSkill = {
+        category_id: category_id,
+    skill_name: skill_name,
+    description: description,
+    user: response.data.skill.user,
+    departments: response.data.skill.departments
+        // Alte proprietăți dacă sunt necesare
+      };
+        console.log(response)
+        setSkills([newSkill, ...skills]);
+        setFormData({
+          skillCategory: '',
+          skillName: '',
+    description: '',
+    author: '',
+    departments: ''
+        });
+      } else {
+        console.error('Error creating skill:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error creating skill:', error.message);
     }
-    setFormData({
-      skillCategory: '',
-      skillName: '',
-      description: '',
-      author: '',
-      departments: ''
-    });
   };
+  
+  
+  
+  
+
 
   const handleUpdateSkill = (index) => {
     const skillToEdit = skills[index];
@@ -153,10 +189,11 @@ const Skills = () => {
         <tbody className="contain">
         {skills.map((skill, index) => (
     <tr key={index}>
-      <td>{skill.skillCategory}</td>
-      <td>{skill.skillName}</td>
+
+      <td>{skill.category_id}</td>
+      <td>{skill.skill_name}</td>
       <td>{skill.description}</td>
-      <td>{skill.author}</td>
+      <td>{skill.user}</td>
       <td>{skill.departments}</td>
       <td>
         <button className="btnn-update" type="button" onClick={() => handleUpdateSkill(index)}><FaPencilAlt /></button>

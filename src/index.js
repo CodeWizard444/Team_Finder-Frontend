@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 import App from './App';
-import { AuthProvider } from './auth/AuthContext';
 import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
@@ -18,7 +17,26 @@ import Admin from './pages/Admin';
 import MyProjects from './pages/MyProjects';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import { useSelector } from 'react-redux'
+import {store} from './redux/store'
+import { Provider } from 'react-redux'
+import { Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
+
+
+
+const PrivateRoutes = () => {
+  const { isAuth } = useSelector((state) => state.auth)
+
+  return <>{isAuth ? <Outlet /> : <Navigate to='/' />}</>
+}
+
+const RestrictedRoutes = () => {
+  const { isAuth } = useSelector((state) => state.auth)
+
+  return <>{!isAuth ? <Outlet /> : <Navigate to='/home' />}</>
+}
 
 function RenderAbout() {
   const location = useLocation();
@@ -35,12 +53,15 @@ function RenderAbout() {
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-    <AuthProvider>
+    <Provider store={store}>
       <div>
         <main>
           <RenderAbout /> 
           <Routes>
+          <Route element={<RestrictedRoutes />}> 
             <Route path="/" element={<App />} /> 
+            </Route>
+            <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/curentproject" element={<CurentProject />} />
@@ -53,10 +74,13 @@ ReactDOM.render(
             <Route path="/depmanager" element={<DepManager  />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="myprojects" element={<MyProjects />} />
+            </Route>
           </Routes>
         </main>
       </div>
-      </AuthProvider>
+
+      </Provider>
+    
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import './depmanager.css';
 import mockData from '../data/mockData';
 import { FaPlus, FaTrash} from 'react-icons/fa';
+import PieChart from '../chart/PieChart';
 
-import { Box } from '@mui/material';
-import Chart from '../chart/Chart';
 
 const DepManager = ({/* assignedSkills*/ }) => {
     const [employeesWithDepartments, setEmployeesWithDepartments] = useState([]);
@@ -87,11 +86,11 @@ const DepManager = ({/* assignedSkills*/ }) => {
                     </tbody>
                 </table>
             </div>
-            <Box m="20px">
-                <Box>
-                    <Chart />
-                </Box>
-            </Box>
+            <div className="chart-data">
+                <span className="chart-data-header">Department Skills Statistics</span>
+                <PieChart />
+            </div>
+            
         </div>
     );
 };

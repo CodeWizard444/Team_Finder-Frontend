@@ -2,13 +2,42 @@ import React, { useState } from 'react';
 import userImg from '../assets/user.jpg';
 import './sidebar.css';
 import { Dropdown } from 'react-bootstrap';
+import { unauthenticateUser } from '../redux/slices/authSlice'
+import { useDispatch } from 'react-redux'
+import axios from 'axios';
+
 
 const Sidebar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const dispatch = useDispatch()
 
     const handleDropdownToggle = () => {
         setShowDropdown(!showDropdown);
     };
+
+    
+    const Logout = async () => {
+        try {
+            const token = localStorage.getItem('token'); // Extrage token-ul din localStorage
+    
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Adaugă token-ul în header-ul 'Authorization'
+                }
+            };
+    
+            // Trimite cererea de logout către server, inclusiv token-ul în header
+            await axios.get('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/logout', config);
+    
+            // După ce cererea de logout a fost realizată cu succes, actualizează starea de autentificare în aplicație, șterge token-ul din localStorage și deconectează utilizatorul
+            dispatch(unauthenticateUser());
+            localStorage.removeItem('isAuth');
+            localStorage.removeItem('token'); // Șterge și token-ul din localStorage
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    
 
     return (
         <main className="d-flex flex-nowrap ">
@@ -53,6 +82,9 @@ const Sidebar = () => {
                     <Dropdown.Menu>
                         <Dropdown.Item href="/myprojects">My projects</Dropdown.Item>
                         <Dropdown.Item href="#">Profile</Dropdown.Item>
+                        <Dropdown.Item ><button onClick={() => Logout()} >
+          Logout
+        </button></Dropdown.Item>
                         <Dropdown.Divider />
                     </Dropdown.Menu>
                 </Dropdown>

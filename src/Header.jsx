@@ -4,15 +4,18 @@ import { IoIosPerson, IoIosBriefcase } from 'react-icons/io';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import './header.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './auth/AuthContext';
+import { login, register } from './api/auth'; // Importăm funcțiile de autentificare și înregistrare
+import { useDispatch } from 'react-redux';
+import { authenticateUser } from './redux/slices/authSlice'; // Importăm acțiunea de autentificare din slice-ul de autentificare Redux
+
 
 const Header = () => {
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [wrapperHeight, setWrapperHeight] = useState(450);
     const navigate = useNavigate();
-    const [token, setToken] = useState(null);
-
+    const dispatch = useDispatch();
+ 
     const handleLoginButtonClick = () => {
         setShowLoginForm(!showLoginForm);
         setShowRegisterForm(false);
@@ -30,58 +33,53 @@ const Header = () => {
         setWrapperHeight(450);
     }
 
-    const { setAuthToken } = useAuth();
-
-    const handleSubmit = async (e) => {
+    const handleLoginSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
         const formDataObj = Object.fromEntries(formData.entries());
 
         try {
-            const loginResponse = await fetch('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: formDataObj.email, password: formDataObj.password }),
-            });
+            const loginResponse = await login({ email: formDataObj.email, password: formDataObj.password });
 
-            if (loginResponse.ok) {
-                const loginData = await loginResponse.json();
-                if (loginData.success) {
-                    console.log(loginData);
-                    setAuthToken(loginData.token);
-                    navigate('/home');
-                } else {
-                    console.error('Login failed:', loginData.error);
-                }
+            if (loginResponse.status === 200) {
+                dispatch(authenticateUser());
+                localStorage.setItem('isAuth', 'true'); // Salvăm starea de autentificare în localStorage   
+                localStorage.setItem('token', loginResponse.data.token);
+                
+                
+                navigate('/home');
             } else {
-                console.error('Error in login request');
+                console.error('Login failed:', loginResponse.data.error);
             }
         } catch (error) {
             console.error('Error in login request:', error.message);
         }
+    };
+
+    const handleRegisterSubmit = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const formDataObj = Object.fromEntries(formData.entries());
 
         try {
-            const signupResponse = await fetch('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({name: formDataObj.name, email: formDataObj.email, password: formDataObj.password , organization_name: formDataObj.organization_name, hq_adress: formDataObj.hq_adress}),
+            const signupResponse = await register({
+                name: formDataObj.name,
+                email: formDataObj.email,
+                password: formDataObj.password,
+                organization_name: formDataObj.organization_name,
+                hq_adress: formDataObj.hq_adress,
             });
 
-            if (signupResponse.ok) {
-                const signupData = await signupResponse.json();
-                if (signupData.success) {
-                    console.log(signupData);
-                    navigate('/home');
-                } else {
-                    console.error('Registration failed:', signupData.error);
-                }
+            if (signupResponse.status === 201) {
+                dispatch(authenticateUser());
+            localStorage.setItem('isAuth', 'true');
+            localStorage.setItem('token', signupResponse.data.token);
+                navigate('/home');
             } else {
-                console.error('Error in registration request');
+                console.log(signupResponse)
+                console.error('Registration failed:', signupResponse.data.error);
             }
         } catch (error) {
             console.error('Error in registration request:', error.message);
@@ -100,7 +98,7 @@ const Header = () => {
                         <span className="icon-close" onClick={handleCloseButtonClick}>×</span>
                         <div className="form-box login">
                             <h2>Login</h2>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleLoginSubmit}>
                                 <div className="input-box">
                                     <span className="icon"><MdMail /></span>
                                     <input type="email" name="email" required />
@@ -133,7 +131,7 @@ const Header = () => {
                         <span className="icon-close" onClick={handleCloseButtonClick}>×</span>
                         <div className="form-box register">
                             <h2>Register</h2>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleRegisterSubmit}>
                                 <div className="input-box">
                                     <span className="icon"><IoIosPerson /></span>
                                     <input type="text" name="name" required />

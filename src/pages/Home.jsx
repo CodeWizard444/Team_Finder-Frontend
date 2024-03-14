@@ -4,6 +4,7 @@ import './home.css';
 import Skills from './Skills';
 import DepManager from './DepManager';
 
+
 const Home = () => {
 
     const [showProfileForm, setShowProfileForm] = useState(false);
@@ -57,12 +58,14 @@ const Home = () => {
             <div className="circles circle-3">
                 <a href="/skills" className="skill-view">Skills</a>
 
-            </div>
+                </div>*
             <div className="look">
                 <h2>Have a look around!</h2>
                 <h3>And you will be surprised what you cand find out</h3>
             </div>
 
+            
+           
         </div>
     );
 }
