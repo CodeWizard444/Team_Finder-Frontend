@@ -80,32 +80,22 @@
   background-color: #090947;
   color: white;
 }
-
 .skill-table {
-    
+  
   width: 90%;
   margin-top: 50px;
   border: 2px solid black;
 }
 
-th {
-  border: 1px solid black;
+th, td {
   padding: 8px;
-  text-align: left;
-}
-
-td
-{
-    border: 1px solid black;
-    padding: 8px;
-    text-align: left;
-    width: 60px; 
-    height: 50px;
+  border: 1px solid #FFF;
 }
 
 th {
   background-color: #f2f2f2;
   color: black;
+  text-align: left;
 }
 
 td {
@@ -113,13 +103,46 @@ td {
   color: black;
 }
 
+
 .form-top {
     order: -1;
 }
-.contain
+
+.one
 {
-    display: 'block';
-    max-height: '400px';
-    overflow-y: 'auto';
+  width: 255px;
 }
-  
+
+.two
+{
+  width: 230px;
+}
+
+.three
+{
+  width: 261px;
+}
+
+.four
+{
+  width: 244px;
+}
+
+.five
+{
+  width: 263px;
+}
+
+.six
+{
+  width: 241px;
+}
+
+.error-messages {
+  background-color: #ffcccc;
+  color: #ff0000;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: .9em;
+}

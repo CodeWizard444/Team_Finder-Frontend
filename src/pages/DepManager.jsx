@@ -3,16 +3,24 @@ import './depmanager.css';
 import mockData from '../data/mockData';
 import { FaPlus, FaTrash} from 'react-icons/fa';
 import PieChart from '../chart/PieChart';
-
+import dataRoles from '../data/dataRoles';
+import ChartStats from '../chart/ChartStats';
+import LevelStats from '../chart/LevelStats';
+import TotalStats from '../chart/TotalStats';
 
 const DepManager = ({/* assignedSkills*/ }) => {
     const [employeesWithDepartments, setEmployeesWithDepartments] = useState([]);
     const [employeesWithoutDepartments, setEmployeesWithoutDepartments] = useState([]);
+    const [departmentManager, setDepartmentManager] = useState(null);
+
     useState(() => {
         const employeesWithDepartmentsInit = mockData.filter(employee => employee.department !== "");
         const employeesWithoutDepartmentsInit = mockData.filter(employee => employee.department === "");
         setEmployeesWithDepartments(employeesWithDepartmentsInit);
         setEmployeesWithoutDepartments(employeesWithoutDepartmentsInit);
+
+        const manager = dataRoles.find(employee => employee.role === "department manager");
+        setDepartmentManager(manager);
     }, []);
 
     const moveToDepartments = (index) => {
@@ -24,6 +32,7 @@ const DepManager = ({/* assignedSkills*/ }) => {
     const removeFromDepartments = (index) => {
         const employeeToRemove = employeesWithDepartments[index];
         setEmployeesWithDepartments(employeesWithDepartments.filter((_, idx) => idx !== index));
+        setEmployeesWithoutDepartments([...employeesWithoutDepartments, employeeToRemove]);
     };
 
     return (
@@ -62,7 +71,7 @@ const DepManager = ({/* assignedSkills*/ }) => {
             </div>
 
             <div className="employee-section">
-                <span className="header-titles-1">Departments Members</span>
+                <span className="header-titles-1">Department Members</span>
                 <table className="dep-tableee">
                     <thead className="hdr">
                         <tr>
@@ -87,10 +96,31 @@ const DepManager = ({/* assignedSkills*/ }) => {
                 </table>
             </div>
             <div className="chart-data">
-                <span className="chart-data-header">Department Skills Statistics</span>
+                <span className="chart-data-header">Department Skill Level Statistics</span>
                 <PieChart />
             </div>
+
+            <div className="percent-stats">
+                <span className="percent-stats-header">Department Skill Level % Statistics</span>
+                    <ChartStats />
+            </div>
             
+            <div className="level-stats">
+                <span className="level-stats-header">Department People Skill Statistics</span>
+                <LevelStats />
+            </div>
+
+            <div className="total-stats">
+                <span className="total-stats-header">Department People Skill Statistics</span>
+                <TotalStats />
+            </div>
+
+            <div className="dep-manager-name">
+                {departmentManager && <span>Department Manager: {departmentManager.name}</span>}
+            </div>
+            <div className="dep-projects">
+                <a href="/depprojects" className="dep-proj-link">Department Projects</a>
+            </div>
         </div>
     );
 };

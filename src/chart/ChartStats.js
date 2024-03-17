@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
-import "./style.css";
+import "./stats.css";
 import chartData from "../data/chartData";
 
-export default function PieChart() {
+export default function ChartStats() {
   const [skillStats, setSkillStats] = useState({});
 
   useEffect(() => {
@@ -37,11 +37,16 @@ export default function PieChart() {
     const myChartRef = chartRef.current.getContext("2d");
 
     const labels = Object.keys(skillStats);
-    const data = Object.values(skillStats).map((stats) => Object.values(stats));
+    const totalEmployees = chartData.length;
+    const data = Object.values(skillStats).map((stats) => {
+      const levelCounts = Object.values(stats);
+      const percentages = levelCounts.map((count) => ((count / totalEmployees) * 100).toFixed(2));
+      return percentages;
+    });
     
 
     chartInstance.current = new Chart(myChartRef, {
-      type: "bar",
+      type: "pie",
       data: {
         labels: labels,
         datasets: [
@@ -76,7 +81,14 @@ export default function PieChart() {
         scales: {
           x: { stacked: true },
           y: { stacked: true }
-        }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.formattedValue}%`,
+            },
+          },
+        },
       }
     });
 
@@ -88,7 +100,7 @@ export default function PieChart() {
   }, [skillStats]);
 
   return (
-    <div className="chart-container">
+    <div className="chart-containers">
       <canvas ref={chartRef} />
     </div>
   );

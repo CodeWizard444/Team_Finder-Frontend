@@ -77,7 +77,7 @@ const chartData = [
         name: "Sophie Lee",
         skills: [
             {name: "Node.js", level: 5},
-            {name: "SQL", level: 5},
+            {name: "SQL", level: 3},
             {name: "HTML/CSS", level: 4}
         ],
         department: "Departament 1",

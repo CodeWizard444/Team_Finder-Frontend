@@ -15,6 +15,7 @@ import EmployeeSkills from './pages/EmployeeSkills';
 import DepManager from './pages/DepManager';
 import Admin from './pages/Admin';
 import MyProjects from './pages/MyProjects';
+import DepProjects from './pages/DepProjects';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { useSelector } from 'react-redux'
@@ -73,7 +74,8 @@ ReactDOM.render(
             <Route path="/employeeskills" element={<EmployeeSkills />} />
             <Route path="/depmanager" element={<DepManager  />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="myprojects" element={<MyProjects />} />
+            <Route path="/myprojects" element={<MyProjects />} />
+            <Route path="/depprojects" element={<DepProjects />} />
             </Route>
           </Routes>
         </main>

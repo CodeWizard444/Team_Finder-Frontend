@@ -1,25 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import AddProject from '../add/addProject';
-import { Box, Typography, Button } from "@mui/material";
-import mockData from '../data/mockData';
+import {Button } from "@mui/material";
 import './curentproject.css';
-import { FaPlus } from 'react-icons/fa';
+
 
 const CurentProject = () => {
     const [open, setOpen] = useState(false);
     const [newProjects, setNewProjects] = useState([]);
     const [originalIndexOrder, setOriginalIndexOrder] = useState([]);
-    const [showSearchBox, setShowSearchBox] = useState(false);
-    const [searchResults, setSearchResults] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [includePartiallyAvailable, setIncludePartiallyAvailable] = useState(false);
-    const [includeCloseToFinish, setIncludeCloseToFinish] = useState(false);
-    const [closeToFinishWeeks, setCloseToFinishWeeks] = useState(4);
-    const [includeUnavailable, setIncludeUnavailable] = useState(false);
-    const [showFilterOptions, setShowFilterOptions] = useState(false); 
-    const [workHours, setWorkHours] = useState('');
-    const [roles, setRoles] = useState('');
-    const [comments, setComments] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('All');
 
     useEffect(() => {
         const storedProjects = JSON.parse(localStorage.getItem('projects'));
@@ -33,13 +22,6 @@ const CurentProject = () => {
         localStorage.setItem('projects', JSON.stringify(newProjects));
     }, [newProjects]);
 
-    const handleOpen = () => {
-        setOpen(true); 
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const handleAddProject = (projectData) => {
         console.log("New project added:", projectData);
@@ -56,78 +38,28 @@ const CurentProject = () => {
         setNewProjects(updatedProjects);
     };
 
-    const handleSearchButtonClick = () => {
-        setShowSearchBox(true); 
-    };
 
-    const handleCloseSearchBox = () => {
-        setShowSearchBox(false);
-        setSearchResults([]); 
-        setSearchQuery(''); 
-    };
-
-    const handleSearchInputChange = (event) => {
-        setSearchQuery(event.target.value);
-        const filteredEmployees = mockData.filter(employee =>
-            employee.name.toLowerCase().includes(event.target.value.toLowerCase())
-        );
-        setSearchResults(filteredEmployees);
-    };
-
-    const filterEmployees = (employee) => {
-        if (includePartiallyAvailable && employee.projects.reduce((total, project) => total + project.hours, 0) < 8) {
-            return true;
+    const filterProjectsByStatus = (project) => {
+        if (selectedStatus === 'All') {
+            return true; 
+        } else {
+            return project.projectStatus === selectedStatus;
         }
-
-        if (includeCloseToFinish) {
-            const today = new Date();
-            const maxFinishDate = new Date(today.getTime() + closeToFinishWeeks * 7 * 24 * 60 * 60 * 1000);
-            return employee.projects.some(project => new Date(project.deadlineDate) <= maxFinishDate);
-        }
-
-        if (includeUnavailable && employee.projects.reduce((total, project) => total + project.hours, 0) >= 8) {
-            return true;
-        }
-
-        if (!includePartiallyAvailable && !includeCloseToFinish && !includeUnavailable) {
-            return employee.projects.length === 0;
-        }
-
-        return false;
     };
-
-    const [openProposeDialog, setOpenProposeDialog] = useState(false);
-
-    const handleProposeForProject = (employee) => {
-
-        setOpenProposeDialog(true);
-    };
-
-    const handleSubmit = () => {
-
-        console.log("Work Hours:", workHours);
-        console.log("Roles:", roles);
-        console.log("Comments:", comments);
-
-        setWorkHours('');
-        setRoles('');
-        setComments('');
-
-        setOpenProposeDialog(false);
-    };
-
     return (
         <div className="pages">
             <div className="projects">
                 <div className="info">
                     
                     <Button variant="contained" onClick={() => setOpen(true)}>Add New Project</Button> 
-                    <Button variant="contained" onClick={handleSearchButtonClick}>Search</Button> 
                 </div>
                 <div className="new-projects">
                     {originalIndexOrder.slice().reverse().map((originalIndex) => { 
                         const project = newProjects[originalIndex];
                         const currentIndex = originalIndexOrder[originalIndex];
+                        if (!filterProjectsByStatus(project)) {
+                            return null; 
+                          }
                         return (
                             <div key={currentIndex} className="Project-1">
                                 <a href="/projectpage" >{project.projectName}</a>
@@ -151,103 +83,22 @@ const CurentProject = () => {
                 </div>
             </div>
             {open && <AddProject setOpen={setOpen} slug="projects" handleAddProject={handleAddProject} />}
-            {showSearchBox && (
-                <div className="search-box">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={handleSearchInputChange}
-                    />
-                    <div className="close-buttons">
-                        <Button variant="contained" onClick={handleCloseSearchBox}>Close</Button> 
-                    </div>
-                    <div className="employees-box">
-                        <div className="employees-header">
-                            <span className="header-item">Name</span>
-                            <span className="header-item">Skills</span>
-                            <span className="header-item">Department</span>
-                            <span className="header-item">Projects</span>
-                            <span className="header-item">Hours</span>
-                            <span className="header-item">Action</span>
-                        </div>
-                        <div className="dropdown">
-                        <Button variant="contained" onClick={() => setShowFilterOptions(prevState => !prevState)}>Filter Options</Button>
-                        {showFilterOptions && (
-                        <div className="dropdown-content">
-                        <label>
-                        Partially-available employees
-                        <input
-                            type="checkbox"
-                            checked={includePartiallyAvailable}
-                            onChange={() => setIncludePartiallyAvailable(!includePartiallyAvailable)}
-                        />
-                        </label>
-                        <label>
-                              Close to finish projects(within 
-                                <input
-                                    type="number"
-                                    min="2"
-                                    max="6"
-                                    value={closeToFinishWeeks}
-                                    onChange={(e) => setCloseToFinishWeeks(Math.max(2, Math.min(6, e.target.value)))}
-                                    />
-                                 weeks)
-                        <input
-                            type="checkbox"
-                            checked={includeCloseToFinish}
-                            onChange={() => setIncludeCloseToFinish(!includeCloseToFinish)}
-                        />
-                        </label>
-                        <label>
-                            Unavailable employees
-                            <input
-                                type="checkbox"
-                                checked={includeUnavailable}
-                                onChange={() => setIncludeUnavailable(!includeUnavailable)}
-                            />
-                        </label>
-                    </div>
-                        )}
-                    </div>
-
-                        {searchResults.map((employee, index) => (
-                            filterEmployees(employee) && (
-                                <div key={index} className="employee-row">
-                                    <span className="employee-info">{employee.name}</span>
-                                    <span className="employee-info">{employee.skills.join(', ')}</span>
-                                    <span className="employee-info">{employee.department}</span>
-                                    <span className="employee-info">{employee.projects.map(project => project.name).join(', ')}</span>
-                                    <span className="employee-info-hours">{employee.projects.reduce((total, project) => total + project.hours, 0)}</span>
-                                    {employee.projects.reduce((total, project) => total + project.hours, 0) < 8 && ( 
-                                    <button className="btnn-prop" variant="contained" onClick={() => handleProposeForProject(employee)}><FaPlus /></button> 
-                                        )}
-                                </div>
-                            )
-                        ))}
-                        {openProposeDialog && (
-                <div className="proposal-dialog">
-                    <h2>Propose for Project</h2>
-                    <div>
-                        <label htmlFor="workHours">Work Hours:</label>
-                        <input type="number" id="workHours" value={workHours} onChange={(e) => setWorkHours(Math.max(1, Math.min(8, e.target.value)))} min={1} max={8} />
-                    </div>
-                    <div>
-                        <label htmlFor="roles">Roles:</label>
-                        <input type="text" id="roles" value={roles} onChange={(e) => setRoles(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor="comments">Comments:</label>
-                        <input type="text" id="comments" value={comments} onChange={(e) => setComments(e.target.value)} />
-                    </div>
-                    <div>
-                        <Button variant="contained" onClick={handleSubmit}>Submit</Button>
-                    </div>
-                </div>
-            )}
-                    </div>
-                </div>
-            )}
+            
+                    {/*{showFilterOptions && (
+                        <select
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(e.target.value)}
+                            className="status-filter"
+                        >
+                            <option value="All">All</option>
+                            <option value="Not Started">Not Started</option>
+                            <option value="Starting">Starting</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Closing">Closing</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    )}*/}
+            
         </div>
     );
 };

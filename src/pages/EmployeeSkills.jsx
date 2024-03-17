@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { blue, green } from "@mui/material/colors";
+import axios from "axios";
 
 const EmployeeSkills = () => {
   const [skills, setSkills] = useState(() => {
@@ -35,23 +36,56 @@ const EmployeeSkills = () => {
   const [newSkill, setNewSkill] = useState({
     name: "",
     skill: "",
-    level: "",
+    level: 1,
     experience: "",
     department: "",
   });
 
-  const handleAddSkill = () => {
-    const id = Math.random().toString(36).substring(7);
-    const newSkillWithId = { ...newSkill, id }; 
-    setSkills([...skills, newSkillWithId]);
-    setNewSkill({
-      name: "",
-      skill: "",
-      level: "",
-      experience: "",
-      department: "",
-    });
+  const levelMappings = {
+    Learns: 1,
+    Knows: 2,
+    Does: 3,
+    Helps: 4,
+    Teaches: 5,
   };
+  
+  const handleAddSkill = async () => {
+    const token = localStorage.getItem("token");
+  
+    try {
+      console.log(newSkill)
+      const response = await axios.post(
+        "https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/users/addskills",
+        {
+          skillName: newSkill.skill,
+          level: newSkill.level, 
+          experience: newSkill.experience 
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      console.log(response.data); 
+  
+      const id = Math.random().toString(36).substring(7);
+      const newSkillWithId = { ...newSkill, id }; 
+      setSkills([...skills, newSkillWithId]);
+      setNewSkill({
+        name: "",
+        skill: "",
+        level: "",
+        experience: "",
+        department: "",
+      });
+    } catch (error) {
+      console.error("Error adding skill:", error);
+    }
+  };
+  
+  
   
   return (
     <div className="pg">
@@ -102,18 +136,19 @@ const EmployeeSkills = () => {
             margin="normal"
           />
           <FormControl fullWidth margin="normal">
-            <InputLabel>Level</InputLabel>
-            <Select
-              value={newSkill.level}
-              onChange={(e) => setNewSkill({ ...newSkill, level: e.target.value })}
-            >
-              <MenuItem value={1}>Learns</MenuItem>
-              <MenuItem value={2}>Knows</MenuItem>
-              <MenuItem value={3}>Does</MenuItem>
-              <MenuItem value={4}>Helps</MenuItem>
-              <MenuItem value={5}>Teaches</MenuItem>
-            </Select>
-          </FormControl>
+  <InputLabel>Level</InputLabel>
+  <Select
+    value={newSkill.level}
+    onChange={(e) => setNewSkill({ ...newSkill, level: e.target.value })}
+  >
+    <MenuItem value={1}>Learns</MenuItem>
+    <MenuItem value={2}>Knows</MenuItem>
+    <MenuItem value={3}>Does</MenuItem>
+    <MenuItem value={4}>Helps</MenuItem>
+    <MenuItem value={5}>Teaches</MenuItem>
+  </Select>
+</FormControl>
+
           <FormControl fullWidth margin="normal">
             <InputLabel>Experience</InputLabel>
             <Select

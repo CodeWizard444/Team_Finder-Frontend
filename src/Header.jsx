@@ -4,9 +4,9 @@ import { IoIosPerson, IoIosBriefcase } from 'react-icons/io';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import './header.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { login, register } from './api/auth'; // Importăm funcțiile de autentificare și înregistrare
+import { login, register } from './api/auth'; 
 import { useDispatch } from 'react-redux';
-import { authenticateUser } from './redux/slices/authSlice'; // Importăm acțiunea de autentificare din slice-ul de autentificare Redux
+import { authenticateUser } from './redux/slices/authSlice'; 
 
 
 const Header = () => {
@@ -15,6 +15,8 @@ const Header = () => {
     const [wrapperHeight, setWrapperHeight] = useState(450);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [loginError, setLoginError] = useState(null);
+    const [registerError, setRegisterError] = useState(null);
  
     const handleLoginButtonClick = () => {
         setShowLoginForm(!showLoginForm);
@@ -35,6 +37,7 @@ const Header = () => {
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
+        setLoginError(null);
 
         const formData = new FormData(e.target);
         const formDataObj = Object.fromEntries(formData.entries());
@@ -44,7 +47,7 @@ const Header = () => {
 
             if (loginResponse.status === 200) {
                 dispatch(authenticateUser());
-                localStorage.setItem('isAuth', 'true'); // Salvăm starea de autentificare în localStorage   
+                localStorage.setItem('isAuth', 'true'); 
                 localStorage.setItem('token', loginResponse.data.token);
                 
                 
@@ -54,11 +57,13 @@ const Header = () => {
             }
         } catch (error) {
             console.error('Error in login request:', error.message);
+            setLoginError('An error occurred during login. Please try again.');
         }
     };
 
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
+        setRegisterError(null);
 
         const formData = new FormData(e.target);
         const formDataObj = Object.fromEntries(formData.entries());
@@ -83,14 +88,21 @@ const Header = () => {
             }
         } catch (error) {
             console.error('Error in registration request:', error.message);
-        }
+            setRegisterError('The email address already exists.');
+    }
     };
+
+    const removeAutocompleteStyle = () => {
+        const autofillFields = document.querySelectorAll('input:-webkit-autofill');
+        autofillFields.forEach(field => {
+            field.style.backgroundColor = 'transparent';
+        });
+    };
+    
+    window.addEventListener('load', removeAutocompleteStyle);
 
     return (
         <div className="app__navbar">
-            <div className="app__navbar-logo">
-                <Link to="/about">Logo</Link>
-            </div>
             <div className="app__navbar-login">
                 <button type="button" onClick={handleLoginButtonClick}>Login</button>
                 {showLoginForm && (
@@ -98,6 +110,7 @@ const Header = () => {
                         <span className="icon-close" onClick={handleCloseButtonClick}>×</span>
                         <div className="form-box login">
                             <h2>Login</h2>
+                            {loginError && <div className="error-message">{loginError}</div>}
                             <form onSubmit={handleLoginSubmit}>
                                 <div className="input-box">
                                     <span className="icon"><MdMail /></span>
@@ -108,10 +121,6 @@ const Header = () => {
                                     <span className="icon"><MdLock /></span>
                                     <input type="password" name="password" required />
                                     <label>Password</label>
-                                </div>
-                                <div className="remember-forgot">
-                                    <label><input type="checkbox" />Remember me</label>
-                                    <a href="#">Forgot Password?</a>
                                 </div>
                                 <button type="submit" className="btn">Login</button>
                                 <div className="app__navbar-register">
@@ -131,6 +140,7 @@ const Header = () => {
                         <span className="icon-close" onClick={handleCloseButtonClick}>×</span>
                         <div className="form-box register">
                             <h2>Register</h2>
+                            {registerError && <div className="error-message">{registerError}</div>}
                             <form onSubmit={handleRegisterSubmit}>
                                 <div className="input-box">
                                     <span className="icon"><IoIosPerson /></span>
@@ -157,10 +167,12 @@ const Header = () => {
                                     <input type="text" name="hq_adress" required />
                                     <label>HQ Address</label>
                                 </div>
-                                <div className="remember-forgot">
-                                    <label><input type="checkbox" />I agree with the terms & conditions</label>
-                                </div>
                                 <button type="submit" className="btn">Register</button>
+                                <div className="login-registerr">
+                                <p>Already have an account?
+                                <a href="#" className="register-linkk" onClick={handleLoginButtonClick}>Login</a>
+                                </p>
+                        </div>
                             </form>
                         </div>
                     </div>

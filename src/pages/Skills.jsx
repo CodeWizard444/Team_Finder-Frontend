@@ -24,6 +24,8 @@ const Skills = () => {
   const [editedSkillIndex, setEditedSkillIndex] = useState(null);
   const [buttonPosition, setButtonPosition] = useState('bottom');
   const [assignedSkills, setAssignedSkills] = useState([])
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     localStorage.setItem('skills', JSON.stringify(skills));
   }, [skills]);
@@ -42,13 +44,14 @@ const Skills = () => {
 
   
     try {
+      
       const token = localStorage.getItem('token');
       
       const response = await axios.post('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/create', {
         category_name: skillCategory,
         skill_name: skillName,
         description: description,
-        departments: departments // Trimite array-ul direct, fără a-l converti în format JSON
+        departments: departments 
       }, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -59,29 +62,31 @@ const Skills = () => {
         
         const {skill_name, description, category_id} = response.data.skill.details;
 
-      // Creează un obiect skill cu informațiile suplimentare
+
       const newSkill = {
         category_id: category_id,
-    skill_name: skill_name,
-    description: description,
-    user: response.data.skill.user,
-    departments: response.data.skill.departments
-        // Alte proprietăți dacă sunt necesare
+        skill_name: skill_name,
+        description: description,
+        user: response.data.skill.user,
+        departments: response.data.skill.departments
       };
         console.log(response)
         setSkills([newSkill, ...skills]);
         setFormData({
           skillCategory: '',
           skillName: '',
-    description: '',
-    author: '',
-    departments: ''
+          description: '',
+          author: '',
+          departments: ''
         });
+        setErrorMessage('');
       } else {
         console.error('Error creating skill:', response.data.error);
+        setErrorMessage('An error occurred while creating the skill. Please try again later.');
       }
     } catch (error) {
       console.error('Error creating skill:', error.message);
+      setErrorMessage('An error occurred while creating the skill. Please try again later.');
     }
   };
   
@@ -90,11 +95,40 @@ const Skills = () => {
   
 
 
-  const handleUpdateSkill = (index) => {
-    const skillToEdit = skills[index];
-    setFormData(skillToEdit);
-    setIsEditing(true);
-    setEditedSkillIndex(index);
+  const handleUpdateSkill = async (index) => {
+    try {
+      const token = localStorage.getItem('token');
+      const skillToEdit = skills[index];
+      setIsEditing(true);
+      setFormData(skillToEdit)
+      setEditedSkillIndex(index);
+      
+  
+      const response = await axios.put('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/update', {
+        currentSkillName: skillToEdit.skill_name,
+        newSkillName: formData.skillName,
+        newCategoryName: formData.skillCategory,
+        description: formData.description,
+        newDepartment: formData.departments
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+  
+      if (response.status === 200) {
+        const updatedSkill = response.data.skill;
+        const updatedSkills = [...skills];
+        updatedSkills[index] = updatedSkill;
+        
+      } else {
+        console.error('Error updating skill:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error updating skill:', error.message);
+    }
+
+    
   };
 
   const handleCancelEdit = () => {
@@ -102,9 +136,26 @@ const Skills = () => {
     setEditedSkillIndex(null);
   };
 
-  const handleDeleteSkill = (index) => {
-    const updatedSkills = skills.filter((_, i) => i !== index);
-    setSkills(updatedSkills);
+  const handleDeleteSkill = async (index) => {
+    try {
+      const token = localStorage.getItem('token');
+      const skillName = skills[index].skill_name;
+  
+      const response = await axios.delete(`https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/${skillName}/delete`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+  
+      if (response.status === 200) {
+        const updatedSkills = skills.filter((_, i) => i !== index);
+        setSkills(updatedSkills);
+      } else {
+        console.error('Error deleting skill:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error deleting skill:', error.message);
+    }
   };
 
 
@@ -122,8 +173,11 @@ const Skills = () => {
     setButtonPosition('bottom');
   };
 
+
   return (
+    
     <div className="skill-page">
+      {errorMessage && <p className="error-messages">{errorMessage}</p>}
       <form
         className={`create-skill ${buttonPosition === 'top' ? 'form-top' : ''}`}
         onSubmit={handleAddSkill}
@@ -151,13 +205,7 @@ const Skills = () => {
           onChange={handleChange}
           placeholder="Description"
         />
-        <input
-          type="text"
-          name="author"
-          value={formData.author}
-          onChange={handleChange}
-          placeholder="Author"
-        />
+        
         <input
           type="text"
           name="departments"
@@ -187,15 +235,14 @@ const Skills = () => {
           </tr>
         </thead>
         <tbody className="contain">
-        {skills.map((skill, index) => (
-    <tr key={index}>
-
-      <td>{skill.category_id}</td>
-      <td>{skill.skill_name}</td>
-      <td>{skill.description}</td>
-      <td>{skill.user}</td>
-      <td>{skill.departments}</td>
-      <td>
+          {skills.map((skill, index) => (
+          <tr key={index}>
+          <td className="one">{skill.category_id}</td>
+          <td className="two">{skill.skill_name}</td>
+          <td className="three">{skill.description}</td>
+          <td className="four">{skill.user}</td>
+          <td className="five">{skill.departments}</td>
+      <td className="six">
         <button className="btnn-update" type="button" onClick={() => handleUpdateSkill(index)}><FaPencilAlt /></button>
         <button className="btnn-delete" type="button" onClick={() => handleDeleteSkill(index)}><FaTrash /></button>
         <button className="btnn-assign" type="button" onClick={() => handleAssignToDepartment(skill.skillName)}><FaUsers /></button>

@@ -64,8 +64,12 @@
     transition: .3s;
 }
 
-.input-boxx input:focus~label, .input-box input:valid~label{
+.input-boxx input:focus ~ label,
+.input-boxx input:valid ~ label,
+.input-boxx input:not(:placeholder-shown) ~ label {
     top: -5px;
+    font-size: 1em; 
+    color: cadetblue; 
 }
 
 .input-boxx input{
@@ -88,27 +92,7 @@
     line-height: 57px;
 }
 
-.remember-forgott {
-    font-size: .9em;
-    color: black;
-    font-weight: 550;
-    margin: -15px 0 15px;
-    display: flex;
-    justify-content: space-between;
-}
 
-.remember-forgott label input{
-    margin-right: 3px;
-}
-
-.remember-forgott a{
-    color: black;
-    text-decoration: none;
-}
-
-.remember-forgott a:hover{
-    text-decoration:underline;
-}
 
 .btnn1{
     width: 90%;
@@ -143,3 +127,19 @@
     text-decoration: underline;
 }
 
+.input-boxx input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+}
+
+.input-boxx input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+}
+
+.errors-message {
+    background-color: #ffcccc;
+    color: #ff0000;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: .9em;
+  }

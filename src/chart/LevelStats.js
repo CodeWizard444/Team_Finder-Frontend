@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
-import "./style.css";
+import "./level.css";
 import chartData from "../data/chartData";
 
-export default function PieChart() {
+export default function LevelStats() {
   const [skillStats, setSkillStats] = useState({});
 
   useEffect(() => {
@@ -13,10 +13,14 @@ export default function PieChart() {
         if (employee.department) {
           employee.skills.forEach((skill) => {
             if (!stats[skill.name]) {
-              stats[skill.name] = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+              stats[skill.name] = { total: 0 }; 
+              for (let i = 0; i <= 5; i++) {
+                stats[skill.name][i] = 0; 
+              }
             }
+            stats[skill.name].total++;
             if (skill.level <= 5) {
-              stats[skill.name][skill.level]++;
+              stats[skill.name][skill.level]++; 
             }
           });
         }
@@ -37,8 +41,11 @@ export default function PieChart() {
     const myChartRef = chartRef.current.getContext("2d");
 
     const labels = Object.keys(skillStats);
-    const data = Object.values(skillStats).map((stats) => Object.values(stats));
-    
+    const data = Object.values(skillStats).map((stats) =>
+      Object.values(stats)
+    );
+
+    const backgroundColors = generateRandomColors(labels.length);
 
     chartInstance.current = new Chart(myChartRef, {
       type: "bar",
@@ -46,38 +53,18 @@ export default function PieChart() {
         labels: labels,
         datasets: [
           {
-            label: "Level 1",
-            data: data.map((stats) => stats[1]),
-            backgroundColor: "#090947"
+            label: "Total",
+            data: Object.values(skillStats).map((stats) => stats.total),
+            backgroundColor: backgroundColors,
           },
-          {
-            label: "Level 2",
-            data: data.map((stats) => stats[2]),
-            backgroundColor: "rgb(244, 253, 0)"
-          },
-          {
-            label: "Level 3",
-            data: data.map((stats) => stats[3]),
-            backgroundColor: "rgb(255, 0, 0)"
-          },
-          {
-            label: "Level 4",
-            data: data.map((stats) => stats[4]),
-            backgroundColor: "rgb(168, 251, 60)"
-          },
-          {
-            label: "Level 5",
-            data: data.map((stats) => stats[5]),
-            backgroundColor: "rgb(255, 67, 5)"
-          }
-        ]
+        ],
       },
       options: {
         scales: {
           x: { stacked: true },
-          y: { stacked: true }
-        }
-      }
+          y: { stacked: true },
+        },
+      },
     });
 
     return () => {
@@ -86,9 +73,16 @@ export default function PieChart() {
       }
     };
   }, [skillStats]);
+  const generateRandomColors = (numColors) => {
+    const colors = [];
+    for (let i = 0; i < numColors; i++) {
+      colors.push(`rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.8)`);
+    }
+    return colors;
+  };
 
   return (
-    <div className="chart-container">
+    <div className="chartz-container">
       <canvas ref={chartRef} />
     </div>
   );
