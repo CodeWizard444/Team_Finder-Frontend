@@ -29,7 +29,7 @@ const DepProjects = () => {
                     {employee.projects.map((project, projectIndex) => (
                         (project.status === filterStatus || filterStatus === "") && project.status !== "closed" && (
                             <div className="dep-project" key={`${employeeIndex}-${projectIndex}`}>
-                                <p>{`Project Name: ${project.name}`}</p>
+                                <a href="/projectpage" >{`Project Name: ${project.name}`} </a>
                                 <p>{`Deadline Date: ${project.deadline_date || "N/A"}`}</p>
                                 <p>{`Project Status: ${project.status}`}</p>
                                 <p>{`Team Members: ${employee.name}`}</p>

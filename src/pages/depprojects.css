@@ -28,6 +28,12 @@
     font-size: 1.1em;
 }
 
+.dep-project a
+{
+    text-decoration: none;
+    color: white;
+}
+
 
 .filter-dropdown
 {

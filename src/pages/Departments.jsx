@@ -3,12 +3,16 @@ import { FaPlus, FaPencilAlt, FaTrash, FaCheck } from 'react-icons/fa';
 import LocalStorage from '../hooks/LocalStorage';
 import './departments.css';
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 const Departments = () => {
     const [departments, setDepartments] = LocalStorage('react-storage.departments',[]);
     const [previousFocusEl, setPreviousFocusEl] = useState(null);
     const [editedDepartment, setEditedDepartment] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
+    const [pageNumber, setPageNumber] = useState(0);
+    const departmentsPerPage = 5; 
+    const pagesVisited = pageNumber * departmentsPerPage;
 
     const addDepartment = (departmentName) => {
         setDepartments(prevDepartments => [
@@ -48,6 +52,9 @@ const Departments = () => {
         previousFocusEl.focus();
     }
 
+    
+
+
     const DepartmentItem = ({ depp }) => {
         return (
             <li className="depp">
@@ -76,6 +83,22 @@ const Departments = () => {
                 </div>
             </li>
         );
+    };
+
+    const pageCount = Math.ceil(departments.length / departmentsPerPage);
+
+    const displayDepartments = departments
+        .slice(pagesVisited, pagesVisited + departmentsPerPage)
+        .map((dep) => (
+            <DepartmentItem
+                key={dep.id}
+                depp={dep}
+                deleteDepartment={deleteDepartment}
+            />
+        ));
+
+    const changePage = ({ selected }) => {
+        setPageNumber(selected);
     };
 
     const DepartmentsList = ({ deps }) => {
@@ -183,6 +206,15 @@ const Departments = () => {
             <DepartmentsList 
             deps={departments} 
             deleteDepartment={deleteDepartment}
+            />
+
+            <ReactPaginate
+                previousLabel={'Previous'}
+                nextLabel={'Next'}
+                pageCount={pageCount}
+                onPageChange={changePage}
+                containerClassName={'pagination'}
+                activeClassName={'active'}
             />
         </div>
     );
