@@ -239,3 +239,8 @@
 .proposal-dialog input {
   flex: 1;
 }
+
+.ai-btnn
+{
+    left: 150px;
+}

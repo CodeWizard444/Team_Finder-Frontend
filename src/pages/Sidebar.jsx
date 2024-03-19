@@ -18,21 +18,19 @@ const Sidebar = () => {
     
     const Logout = async () => {
         try {
-            const token = localStorage.getItem('token'); // Extrage token-ul din localStorage
+            const token = localStorage.getItem('token'); 
     
             const config = {
                 headers: {
-                    'Authorization': `Bearer ${token}` // Adaugă token-ul în header-ul 'Authorization'
+                    'Authorization': `Bearer ${token}` 
                 }
             };
-    
-            // Trimite cererea de logout către server, inclusiv token-ul în header
             await axios.get('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/logout', config);
     
-            // După ce cererea de logout a fost realizată cu succes, actualizează starea de autentificare în aplicație, șterge token-ul din localStorage și deconectează utilizatorul
+            
             dispatch(unauthenticateUser());
             localStorage.removeItem('isAuth');
-            localStorage.removeItem('token'); // Șterge și token-ul din localStorage
+            localStorage.removeItem('token');
         } catch (error) {
             console.log(error.response);
         }
@@ -81,7 +79,6 @@ const Sidebar = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item href="/myprojects">My projects</Dropdown.Item>
-                        <Dropdown.Item href="#">Profile</Dropdown.Item>
                         <Dropdown.Item ><button onClick={() => Logout()} >
           Logout
         </button></Dropdown.Item>

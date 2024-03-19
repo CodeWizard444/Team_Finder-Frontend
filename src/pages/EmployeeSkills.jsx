@@ -60,6 +60,7 @@ const EmployeeSkills = () => {
           skillName: newSkill.skill,
           level: newSkill.level, 
           experience: newSkill.experience 
+          
         },
         {
           headers: {

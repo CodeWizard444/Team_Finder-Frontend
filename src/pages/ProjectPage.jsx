@@ -4,6 +4,7 @@ import mockData from '../data/mockData';
 import { FaTrash } from 'react-icons/fa';
 import { Button } from "@mui/material";
 import { FaPlus } from 'react-icons/fa';
+import projectData from '../data/projectData';
 
 const ProjectPage = () => {
     const [showSearchBox, setShowSearchBox] = useState(false);
@@ -27,11 +28,11 @@ const ProjectPage = () => {
 
     useEffect(() => {
         const active = mockData.filter(employee => employee.projects.length > 0);
-        const proposed = mockData.filter(employee => employee.projects.length === 0);
 
         setActiveMembers(active);
-        setProposedMembers(proposed);
     }, []);
+
+    
 
     const handleMoveToPastMembers = (employee) => {
         setActiveMembers(activeMembers.filter(emp => emp !== employee));
@@ -93,45 +94,56 @@ const ProjectPage = () => {
     };
 
     const handleProposeForProject = (employee) => {
-        setOpenPropDialog(true);
+        setSelectedEmployee(employee);
+    setOpenPropDialog(true);
     };
-
+    
     const handleSubmitt = () => {
         console.log("Work Hours:", workHours);
         console.log("Roles:", roles);
         console.log("Comments:", comment);
-    
-        // Creăm o nouă instanță a obiectului selectedEmployee cu valorile actualizate
-        const proposedEmployee = {
-            ...selectedEmployee,
-            comments: comment,
-            workHours: workHours,
-            roles: roles
-        };
-    
-        // Adăugăm noul angajat propus la lista de angajați propuși
-        setProposedMembers(prevProposedMembers => [...prevProposedMembers, proposedEmployee]);
-    
-        // Resetăm valorile pentru următoarea propunere
+        
         setWorkHours('');
         setRoles('');
         setComment('');
-    
+        
+        if (selectedEmployee) { 
+            setProposedMembers(prevProposedMembers => [...prevProposedMembers, selectedEmployee]);
+        }
+        
         setOpenPropDialog(false);
     };
     
     return (
         <div className="pag">
             <Button className="src-btnnn" variant="contained" onClick={handleSearchButtonClick}>Search</Button> 
-            <div className="technology"></div>
+            <Button className="ai-btnn" variant="contained">AI Generate Team </Button>
+            <div className="technology">
+            {projectData.map((project, index) => (
+                    <div key={index}>
+                        <h2>{project.project_name}</h2>
+                        <p><strong>Project Period:</strong> {project.project_period}</p>
+                        <p><strong>Start Date:</strong> {project.start_date}</p>
+                        <p><strong>Deadline Date:</strong> {project.deadline_date}</p>
+                        <p><strong>Project Status:</strong> {project.project_status}</p>
+                        <p><strong>General Description:</strong> {project.general_description}</p>
+                        <p><strong>Technology Stack:</strong> {project.technology_stack.join(', ')}</p>
+                        <p><strong>Team Members:</strong></p>
+                        <div>
+                            <p><strong>Active Members:</strong> {project.team_members[0].active_members.join(', ')}</p>
+                            <p><strong>Past Members:</strong> {project.team_members[0].past_members.join(', ')}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
             <div className="team-members">
                 <div className="members-column">
                     <h2 className="header">Proposed Members</h2>
                     <hr className="divider"/>
                     <ul>
-                        {proposedMembers.map((employee, index) => (
-                            <li key={index}>{employee.name}</li>
-                        ))}
+                    {proposedMembers.map((employee, index) => (
+            <li key={index}>{employee.name}</li>
+        ))}
                     </ul>
                 </div>
                 <div className="members-column">

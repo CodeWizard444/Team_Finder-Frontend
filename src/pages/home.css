@@ -113,6 +113,7 @@
     box-shadow: 0 1em 2em rgba(0,0,0,.1);
     font-size: 1em;
     color: white;
+    border-radius: .3em;
     
 }
 .login-link:hover

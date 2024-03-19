@@ -21,13 +21,14 @@ const DepProjects = () => {
                     <option value="starting">Starting</option>
                     <option value="in progress">In Progress</option>
                     <option value="closing">Closing</option>
+                    <option value="closed">Closed</option>
                 </select>
             </div>
 
             {departmentEmployees.map((employee, employeeIndex) => (
                 <div className="dep-wrap" key={employeeIndex}>
                     {employee.projects.map((project, projectIndex) => (
-                        (project.status === filterStatus || filterStatus === "") && project.status !== "closed" && (
+                        (project.status === filterStatus || filterStatus === "") && (
                             <div className="dep-project" key={`${employeeIndex}-${projectIndex}`}>
                                 <a href="/projectpage" >{`Project Name: ${project.name}`} </a>
                                 <p>{`Deadline Date: ${project.deadline_date || "N/A"}`}</p>

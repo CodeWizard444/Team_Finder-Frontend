@@ -1,32 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlus, FaPencilAlt, FaTrash, FaCheck } from 'react-icons/fa';
-import LocalStorage from '../hooks/LocalStorage';
 import './departments.css';
 import { Link } from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
+import axios from 'axios';
 
 const Departments = () => {
-    const [departments, setDepartments] = LocalStorage('react-storage.departments',[]);
+    const [departments, setDepartments] = useState([]);
     const [previousFocusEl, setPreviousFocusEl] = useState(null);
     const [editedDepartment, setEditedDepartment] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
-    const [pageNumber, setPageNumber] = useState(0);
-    const departmentsPerPage = 5; 
-    const pagesVisited = pageNumber * departmentsPerPage;
 
-    const addDepartment = (departmentName) => {
-        setDepartments(prevDepartments => [
-            ...prevDepartments,
-            {
-                name: departmentName,
-                id: Date.now()
+    useEffect(() => {
+        const fetchDepartments = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/organization/departments', {
+                    headers: {
+                        Authorization: `Bearer ${token}`, 
+                    },
+                });
+                setDepartments(response.data.departments.map((department, index) => ({ id: index, name: department }))); // Adaugă un id unic pentru fiecare departament
+            } catch (error) {
+                console.error('Error fetching departments:', error);
             }
-        ]);
+        };
+
+        fetchDepartments();
+    }, []);
+
+    const addDepartment = async (departmentName) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                'https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/departments/create',
+                { department_name: departmentName },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, 
+                    },
+                }
+            );
+            console.log(response)
+            const newDepartment = {
+                id: departments.length, // Setează un id unic pentru noul departament
+                name: response.data.department_name
+            };
+            setDepartments(prevDepartments => [
+                ...prevDepartments,
+                newDepartment
+            ]);
+        } catch (error) {
+            console.error('Error adding department:', error);
+        }
     };
 
-    const deleteDepartment = (id) => {
-        setDepartments(prevDepartments => prevDepartments.filter(dep => dep.id !== id));
-    }
+    const deleteDepartment = async (departmentName) => {
+        try {
+            const token = localStorage.getItem('token'); 
+            await axios.delete(
+                `https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/departments/${encodeURIComponent(departmentName)}/delete`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, 
+                    },
+                }
+            );
+            setDepartments(prevDepartments => prevDepartments.filter(dep => dep.name !== departmentName));
+            console.log(`Department with name "${departmentName}" deleted successfully`);
+        } catch (error) {
+            console.error('Error deleting department:', error);
+        }
+    };
+    
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -52,9 +97,6 @@ const Departments = () => {
         previousFocusEl.focus();
     }
 
-    
-
-
     const DepartmentItem = ({ depp }) => {
         return (
             <li className="depp">
@@ -75,41 +117,25 @@ const Departments = () => {
                     <button
                         className='btnnn-delete'
                         aria-label={`Delete ${depp.name} Task`}
-                        onClick={() => deleteDepartment(depp.id)}
+                        onClick={() => deleteDepartment(depp.name)}
                     >
                         <FaTrash width={24} height={24} />
-
                     </button>
                 </div>
             </li>
         );
     };
 
-    const pageCount = Math.ceil(departments.length / departmentsPerPage);
 
-    const displayDepartments = departments
-        .slice(pagesVisited, pagesVisited + departmentsPerPage)
-        .map((dep) => (
-            <DepartmentItem
-                key={dep.id}
-                depp={dep}
-                deleteDepartment={deleteDepartment}
-            />
-        ));
-
-    const changePage = ({ selected }) => {
-        setPageNumber(selected);
-    };
 
     const DepartmentsList = ({ deps }) => {
         return (
             <ul className="deps">
-                {deps.sort((a, b) => b.id - a.id).map(depp => (
+                {deps.map(depp => (
                     <DepartmentItem
-                        key={depp.id}
+                        key={depp.id} // Utilizăm id-ul departamentului ca și cheie unică
                         depp={depp}
                         deleteDepartment={deleteDepartment}
-                        
                     />
                 ))}
             </ul>
@@ -135,6 +161,7 @@ const Departments = () => {
           e.preventDefault();
           updateDepartment({...editedDepartment, name: updatedDepartmentName})
         }
+        
       
         return (
           <div
@@ -175,6 +202,7 @@ const Departments = () => {
         )
       };
 
+
     return (
         <div className="dep">
             <form onSubmit={handleFormSubmit}>
@@ -203,19 +231,8 @@ const Departments = () => {
                 />
             )}
 
-            <DepartmentsList 
-            deps={departments} 
-            deleteDepartment={deleteDepartment}
-            />
+            <DepartmentsList deps={departments} />
 
-            <ReactPaginate
-                previousLabel={'Previous'}
-                nextLabel={'Next'}
-                pageCount={pageCount}
-                onPageChange={changePage}
-                containerClassName={'pagination'}
-                activeClassName={'active'}
-            />
         </div>
     );
 };

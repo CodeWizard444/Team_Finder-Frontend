@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import './home.css';
 import Skills from './Skills';
 import DepManager from './DepManager';
-
+import axios from 'axios';
 
 const Home = () => {
 
@@ -18,7 +18,25 @@ const Home = () => {
         setShowProfileForm(false);
     }
 
-   
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/users/getskills', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setUserData(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
 
     return (
@@ -37,13 +55,13 @@ const Home = () => {
                             <h2>Profile</h2>
                             <form >
                                 <div className="input-bx">
-                                    Status: user
+                                Status: {userData.user.role}
                                 </div>
                                 <div className="input-bx">
-                                    Skills: React.js,Kanban & Azure
+                                Skills: {userData.skills.length > 0 ? userData.skills.map(skill => skill.skill_name).join(', ') : 'No skills'}
                                 </div>
                                 <div className="input-bx">
-                                    Department: Departament 1
+                                Department: {userData.department_name ? userData.department_name : 'No departments'}
                                 </div>
                                 
                             </form>
@@ -58,14 +76,12 @@ const Home = () => {
             <div className="circles circle-3">
                 <a href="/skills" className="skill-view">Skills</a>
 
-                </div>*
+            </div>
             <div className="look">
                 <h2>Have a look around!</h2>
                 <h3>And you will be surprised what you cand find out</h3>
             </div>
 
-            
-           
         </div>
     );
 }

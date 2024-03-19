@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import AddProject from '../add/addProject';
 import {Button } from "@mui/material";
 import './curentproject.css';
+import axios from 'axios';
 
 
 const CurentProject = () => {
     const [open, setOpen] = useState(false);
     const [newProjects, setNewProjects] = useState([]);
     const [originalIndexOrder, setOriginalIndexOrder] = useState([]);
-    const [selectedStatus, setSelectedStatus] = useState('All');
 
     useEffect(() => {
         const storedProjects = JSON.parse(localStorage.getItem('projects'));
@@ -23,11 +23,71 @@ const CurentProject = () => {
     }, [newProjects]);
 
 
-    const handleAddProject = (projectData) => {
-        console.log("New project added:", projectData);
-        setNewProjects([...newProjects, projectData]);
+    const fetchProjects = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await axios.get(
+            'https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/projects/manager',
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setNewProjects(response.data.projects);
+        } catch (error) {
+          console.error('Error fetching projects:', error.response.data.error);
+        }
+      };
+
+      useEffect(() => {
+        fetchProjects();
+      }, []);
+      
+      
+
+    const handleAddProject = async (projectData) => {
+        try {
+            const projectPeriod = projectData.projectPeriod || "Ongoing";
+            const deadlineDate = projectData.deadlineDate || null;
+            const generalDescription = projectData.generalDescription || null;
+            const technologyStack = projectData.technologyStack.length > 0 ? projectData.technologyStack : null;
+            const teamRoles = Array.isArray(projectData.teamRoles) ? projectData.teamRoles : [];   
+
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                'https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/projects/create',
+                {
+                    project_name: projectData.projectName,
+                    project_period: projectPeriod,
+                    start_date: projectData.startDate,
+                    deadline_date: deadlineDate,
+                    status: projectData.projectStatus,
+                    general_description: generalDescription,
+                    technology_stack: technologyStack,
+                    team_roles: teamRoles
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            console.log('Project created successfully:', response.data.project);
+            const newProject = response.data.project;
+        setNewProjects([newProject, ...newProjects]);
+        await fetchProjects();
+
+
+      
         setOriginalIndexOrder([...originalIndexOrder, originalIndexOrder.length]);
-        setOpen(false); 
+
+        console.log('Project created successfully:', newProject);
+           
+        } catch (error) {
+            console.error('Error creating project:', error.response.data.error);
+          
+        }
     };
 
     const handleStatusChange = (e, originalIndex) => {
@@ -38,14 +98,6 @@ const CurentProject = () => {
         setNewProjects(updatedProjects);
     };
 
-
-    const filterProjectsByStatus = (project) => {
-        if (selectedStatus === 'All') {
-            return true; 
-        } else {
-            return project.projectStatus === selectedStatus;
-        }
-    };
     return (
         <div className="pages">
             <div className="projects">
@@ -57,17 +109,14 @@ const CurentProject = () => {
                     {originalIndexOrder.slice().reverse().map((originalIndex) => { 
                         const project = newProjects[originalIndex];
                         const currentIndex = originalIndexOrder[originalIndex];
-                        if (!filterProjectsByStatus(project)) {
-                            return null; 
-                          }
                         return (
                             <div key={currentIndex} className="Project-1">
-                                <a href="/projectpage" >{project.projectName}</a>
-                                <p>Deadline Date: {project.deadlineDate}</p>
+                                <a href="/projectpage" >{project?.project_name}</a>
+                                <p>Deadline Date: {new Date(project?.deadline_date).toLocaleDateString()}</p>                               
                                 <label htmlFor={`status-${currentIndex}`}>Project Status:</label>
                                 <select
                                     id={`status-${currentIndex}`}
-                                    value={project.projectStatus}
+                                    value={project?.projectStatus}
                                     onChange={(e) => handleStatusChange(e, originalIndex)}
                                     className="status-select"
                                 >
@@ -83,21 +132,6 @@ const CurentProject = () => {
                 </div>
             </div>
             {open && <AddProject setOpen={setOpen} slug="projects" handleAddProject={handleAddProject} />}
-            
-                    {/*{showFilterOptions && (
-                        <select
-                            value={selectedStatus}
-                            onChange={(e) => setSelectedStatus(e.target.value)}
-                            className="status-filter"
-                        >
-                            <option value="All">All</option>
-                            <option value="Not Started">Not Started</option>
-                            <option value="Starting">Starting</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Closing">Closing</option>
-                            <option value="Closed">Closed</option>
-                        </select>
-                    )}*/}
             
         </div>
     );
