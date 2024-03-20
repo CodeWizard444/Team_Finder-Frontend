@@ -15,8 +15,6 @@ const AddProject = (props) => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    // Handle checkbox input separately
     if (type === "checkbox") {
       const updatedStack = checked
         ? [...formData.technologyStack, value]

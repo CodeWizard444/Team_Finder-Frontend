@@ -128,7 +128,7 @@ tbody {
 .chart-data
 {
     margin-left: 700px;
-    margin-top: 650px;
+    margin-top: 850px;
 }
 
 .chart-data-header
@@ -154,7 +154,7 @@ tbody {
 .level-stats
 {
     margin-left: 200px;
-    margin-top: 1150px;
+    margin-top: 1250px;
 }
 
 .level-stats-header
@@ -222,4 +222,18 @@ tbody {
 .dep-proj-link:hover
 {
     background-image: linear-gradient(to right, rgb(5, 117, 230), rgb(2, 27, 121));
+}
+
+.notifications
+{
+    display: flex;
+    height: 360px;
+    width: 400px;
+    background-color: white;
+    border-radius: .5em;
+    position: absolute;
+    justify-content: center; 
+    align-items: flex-start;
+    top: 460px;
+    right: 40px;
 }

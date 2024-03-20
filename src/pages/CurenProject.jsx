@@ -9,6 +9,7 @@ const CurentProject = () => {
     const [open, setOpen] = useState(false);
     const [newProjects, setNewProjects] = useState([]);
     const [originalIndexOrder, setOriginalIndexOrder] = useState([]);
+    const [selectedStatus, setSelectedStatus] = useState('All');
 
     useEffect(() => {
         const storedProjects = JSON.parse(localStorage.getItem('projects'));
@@ -48,6 +49,7 @@ const CurentProject = () => {
 
     const handleAddProject = async (projectData) => {
         try {
+            // Setăm variabilele care lipsesc sau au lungimea zero ca null
             const projectPeriod = projectData.projectPeriod || "Ongoing";
             const deadlineDate = projectData.deadlineDate || null;
             const generalDescription = projectData.generalDescription || null;
@@ -98,6 +100,18 @@ const CurentProject = () => {
         setNewProjects(updatedProjects);
     };
 
+    const handleProjectClick = (projectName) => {
+        localStorage.setItem('currentproject', projectName);
+    };
+
+
+    const filterProjectsByStatus = (project) => {
+        if (selectedStatus === 'All') {
+            return true; 
+        } else {
+            return project.projectStatus === selectedStatus;
+        }
+    };
     return (
         <div className="pages">
             <div className="projects">
@@ -109,11 +123,13 @@ const CurentProject = () => {
                     {originalIndexOrder.slice().reverse().map((originalIndex) => { 
                         const project = newProjects[originalIndex];
                         const currentIndex = originalIndexOrder[originalIndex];
+                        if (!filterProjectsByStatus(project)) {
+                            return null; 
+                          }
                         return (
                             <div key={currentIndex} className="Project-1">
-                                <a href="/projectpage" >{project?.project_name}</a>
-                                <p>Deadline Date: {new Date(project?.deadline_date).toLocaleDateString()}</p>                               
-                                <label htmlFor={`status-${currentIndex}`}>Project Status:</label>
+                                <a href="/projectpage" onClick={() => handleProjectClick(project.project_name)}>{project?.project_name}</a>
+                                <p>Deadline Date: {new Date(project?.deadline_date).toLocaleDateString()}</p>                                <label htmlFor={`status-${currentIndex}`}>Project Status:</label>
                                 <select
                                     id={`status-${currentIndex}`}
                                     value={project?.projectStatus}

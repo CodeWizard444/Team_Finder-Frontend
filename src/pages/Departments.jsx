@@ -98,10 +98,13 @@ const Departments = () => {
     }
 
     const DepartmentItem = ({ depp }) => {
+        const handleDepartmentClick = () => {
+            localStorage.setItem('departmentName', depp.name); // Salvează numele departamentului în localStorage
+        };
         return (
             <li className="depp">
                 <div className="departmentt">
-                <Link to="/depmanager" className="department-link">
+                <Link to="/depmanager" className="department-link" onClick={handleDepartmentClick}>
                     {depp.name}
                 </Link>
                 </div>
@@ -125,8 +128,6 @@ const Departments = () => {
             </li>
         );
     };
-
-
 
     const DepartmentsList = ({ deps }) => {
         return (
@@ -161,7 +162,6 @@ const Departments = () => {
           e.preventDefault();
           updateDepartment({...editedDepartment, name: updatedDepartmentName})
         }
-        
       
         return (
           <div
@@ -202,7 +202,6 @@ const Departments = () => {
         )
       };
 
-
     return (
         <div className="dep">
             <form onSubmit={handleFormSubmit}>
@@ -232,7 +231,6 @@ const Departments = () => {
             )}
 
             <DepartmentsList deps={departments} />
-
         </div>
     );
 };

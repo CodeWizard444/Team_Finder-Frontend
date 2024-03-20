@@ -1,0 +1,55 @@
+.dep-project-page
+{
+    min-height: 100vh;
+    display: flex;
+    background: radial-gradient(465px at -15.1% -25%, rgb(17, 130, 193) 0%, rgb(67, 166, 238) 49%, rgb(126, 203, 244) 90.2%);
+}
+
+.details
+{
+    background-image: linear-gradient(109.6deg, rgb(61, 121, 176) 11.3%, rgb(35, 66, 164) 91.1%);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    height: 300px;
+    width: 500px;
+    overflow-y: auto;
+    position: absolute;
+    left: 100px;
+    top: 200px;
+}
+
+.team-memberss
+{
+    background-image: linear-gradient(109.6deg, rgb(61, 121, 176) 11.3%, rgb(35, 66, 164) 91.1%);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    height: 300px;
+    width: 500px;
+    overflow-y: auto;
+    position: absolute;
+    right: 100px;
+    top: 200px;
+}
+
+.members-columns
+{
+    font-weight: 600;
+}
+
+.project-det
+{
+    font-size: 1.5em;
+    color: white;
+    margin-top: 170px;
+    margin-left: 250px;
+}
+
+.project-mem
+{
+    font-size: 1.5em;
+    color: white;
+    margin-top: 170px;
+    margin-left: 700px;
+}

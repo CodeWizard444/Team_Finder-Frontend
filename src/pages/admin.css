@@ -51,6 +51,30 @@
     padding: 5px 0;
 }
 
+.roles-item
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.roles-item span
+{
+    flex: 1; 
+    text-align: center; 
+}
+
+.roles-item::after {
+    content: '';
+    height: 35px;
+    width: 1px; 
+    background-color: #090947;
+    position: absolute;
+    top: 0; 
+    right: 45%; 
+    transform: translateX(50%);
+}
 .employee-item span {
     flex: 1; 
     text-align: center; 
@@ -131,7 +155,30 @@
     color: #090947;
 }
 
-.role-item {
-    font-size: 1.1em;
+.roles-item {
+    font-size: 1em;
     font-weight: 600;
+}
+
+.deletee-btnn
+{
+    width: 30px;
+    height: 30px;
+    align-items: center; 
+    justify-content: center; 
+    gap: 0.5em;
+    background-color: white;
+    color: cadetblue;
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: .3em ;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 8px;
+}
+
+.deletee-btnn:hover
+{
+    background-color: rgba(213, 18, 18, 0.792);
+    color: white;
 }

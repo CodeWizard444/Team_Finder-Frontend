@@ -16,6 +16,7 @@ import DepManager from './pages/DepManager';
 import Admin from './pages/Admin';
 import MyProjects from './pages/MyProjects';
 import DepProjects from './pages/DepProjects';
+import ProjectView from './pages/ProjectView';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { useSelector } from 'react-redux'
@@ -76,6 +77,7 @@ ReactDOM.render(
             <Route path="/admin" element={<Admin />} />
             <Route path="/myprojects" element={<MyProjects />} />
             <Route path="/depprojects" element={<DepProjects />} />
+            <Route path="/projectview" element={<ProjectView />} />
             </Route>
           </Routes>
         </main>

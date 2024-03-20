@@ -5,6 +5,9 @@ import { blue, green } from "@mui/material/colors";
 import axios from "axios";
 
 const EmployeeSkills = () => {
+  const [department, setDepartment] = useState("");
+  const [name, setName] = useState("");
+  
   const [skills, setSkills] = useState(() => {
     const storedSkills = localStorage.getItem('employeeSkills'); 
     if (storedSkills) {
@@ -27,15 +30,41 @@ const EmployeeSkills = () => {
   const columns = [
     { field: "id", headerName: "ID", hide: true },
     { field: "name", headerName: "Name", flex: 1 },
-    { field: "skill", headerName: "Skill", flex: 1 },
+    { field: "skill_name", headerName: "Skill", flex: 1 },
     { field: "level", headerName: "Level", flex: 1 },
     { field: "experience", headerName: "Experience", flex: 1 },
     { field: "department", headerName: "Department", flex: 1 },
+    {
+      field: "action",
+      headerName: "Action",
+      flex: 1,
+      renderCell: (params) => (
+        <Button variant="contained" color="error" onClick={() => handleDeleteSkill(params.row.id)}>Delete</Button>
+      ),
+    },
   ];
+
+  const handleDeleteSkill = (id) => {
+    setSkills(skills.filter((skill) => skill.id !== id));
+  };
+
+  columns[1] = { 
+    field: "name", 
+    headerName: "Name", 
+    flex: 1, 
+    valueGetter: (params) => name 
+  };
+
+  columns[5] = { 
+    field: "department", 
+    headerName: "Department", 
+    flex: 1, 
+    valueGetter: (params) => department 
+  };
 
   const [newSkill, setNewSkill] = useState({
     name: "",
-    skill: "",
+    skill_name: "",
     level: 1,
     experience: "",
     department: "",
@@ -48,6 +77,8 @@ const EmployeeSkills = () => {
     Helps: 4,
     Teaches: 5,
   };
+
+  
   
   const handleAddSkill = async () => {
     const token = localStorage.getItem("token");
@@ -57,10 +88,9 @@ const EmployeeSkills = () => {
       const response = await axios.post(
         "https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/users/addskills",
         {
-          skillName: newSkill.skill,
+          skillName: newSkill.skill_name,
           level: newSkill.level, 
           experience: newSkill.experience 
-          
         },
         {
           headers: {
@@ -69,14 +99,16 @@ const EmployeeSkills = () => {
         }
       );
   
-      console.log(response.data); 
+      console.log(response.data);
+      setDepartment(response.data.department);
+      setName(response.data.name);
   
       const id = Math.random().toString(36).substring(7);
       const newSkillWithId = { ...newSkill, id }; 
       setSkills([...skills, newSkillWithId]);
       setNewSkill({
         name: "",
-        skill: "",
+        skill_name: "",
         level: "",
         experience: "",
         department: "",
@@ -85,6 +117,42 @@ const EmployeeSkills = () => {
       console.error("Error adding skill:", error);
     }
   };
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/users/getskills",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const skillsWithIds = response.data.skills.map((skill, index) => ({
+        ...skill,
+        id: index.toString(), 
+      }));
+      console.log(response)
+      setSkills(skillsWithIds);
+      setDepartment(response.data.department);
+      setName(response.data.name);
+
+      
+    } catch (error) {
+      console.error("Error fetching user skills:", error);
+    }
+  };
+  fetchData();
+}, []);
+
+
+  
+console.log(name)
+  
   
   
   
@@ -131,8 +199,8 @@ const EmployeeSkills = () => {
           />
           <TextField
             label="Skill"
-            value={newSkill.skill}
-            onChange={(e) => setNewSkill({ ...newSkill, skill: e.target.value })}
+            value={newSkill.skill_name}
+            onChange={(e) => setNewSkill({ ...newSkill, skill_name: e.target.value })}
             fullWidth
             margin="normal"
           />

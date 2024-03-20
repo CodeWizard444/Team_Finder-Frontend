@@ -1,34 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import './skill.css';
+import axios from 'axios';
 import { FaPlus, FaPencilAlt, FaTrash, FaCheck } from 'react-icons/fa';
 import { FaUsers } from 'react-icons/fa';
-import { Link} from 'react-router-dom';
-import axios from 'axios';
-
-
-
+import { Link } from 'react-router-dom';
 
 const Skills = () => {
-  const [skills, setSkills] = useState(() => {
-    const savedSkills = localStorage.getItem('skills');
-    return savedSkills ? JSON.parse(savedSkills) : [];
-  });
+  const [skills, setSkills] = useState([]);
   const [formData, setFormData] = useState({
-    category_id: '',
+    category: '',
     skill_name: '',
     description: '',
-    user: '',
-    departments: ''
+    department: ''
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editedSkillIndex, setEditedSkillIndex] = useState(null);
   const [buttonPosition, setButtonPosition] = useState('bottom');
-  const [assignedSkills, setAssignedSkills] = useState([])
+  const [assignedSkills, setAssignedSkills] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('skills', JSON.stringify(skills));
-  }, [skills]);
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/organization', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setSkills(response.data.skills);
+      } catch (error) {
+        console.error('Error fetching organization skills:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -37,16 +43,12 @@ const Skills = () => {
     });
   };
 
-
   const handleAddSkill = async (e) => {
     e.preventDefault();
     const { skillCategory, skillName, description, departments } = formData;
 
-  
     try {
-      
       const token = localStorage.getItem('token');
-      
       const response = await axios.post('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/create', {
         category_name: skillCategory,
         skill_name: skillName,
@@ -59,24 +61,20 @@ const Skills = () => {
       });
       
       if (response.status === 201) {
-        
-        const {skill_name, description, category_id} = response.data.skill.details;
+        const { skill_name, description, category } = response.data.skill;
 
-
-      const newSkill = {
-        category_id: category_id,
-        skill_name: skill_name,
-        description: description,
-        user: response.data.skill.user,
-        departments: response.data.skill.departments
-      };
-        console.log(response)
+        const newSkill = {
+          category: category,
+          skill_name: skill_name,
+          description: description,
+          author: response.data.skill.author,
+          department: response.data.skill.department
+        };
         setSkills([newSkill, ...skills]);
         setFormData({
           skillCategory: '',
           skillName: '',
           description: '',
-          author: '',
           departments: ''
         });
         setErrorMessage('');
@@ -89,21 +87,15 @@ const Skills = () => {
       setErrorMessage('An error occurred while creating the skill. Please try again later.');
     }
   };
-  
-  
-  
-  
-
 
   const handleUpdateSkill = async (index) => {
     try {
       const token = localStorage.getItem('token');
       const skillToEdit = skills[index];
       setIsEditing(true);
-      setFormData(skillToEdit)
+      setFormData(skillToEdit);
       setEditedSkillIndex(index);
-      
-  
+
       const response = await axios.put('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/update', {
         currentSkillName: skillToEdit.skill_name,
         newSkillName: formData.skillName,
@@ -115,20 +107,18 @@ const Skills = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-  
+
       if (response.status === 200) {
         const updatedSkill = response.data.skill;
         const updatedSkills = [...skills];
         updatedSkills[index] = updatedSkill;
-        
+        setSkills(updatedSkills);
       } else {
         console.error('Error updating skill:', response.data.error);
       }
     } catch (error) {
       console.error('Error updating skill:', error.message);
     }
-
-    
   };
 
   const handleCancelEdit = () => {
@@ -140,13 +130,13 @@ const Skills = () => {
     try {
       const token = localStorage.getItem('token');
       const skillName = skills[index].skill_name;
-  
+
       const response = await axios.delete(`https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/${skillName}/delete`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-  
+
       if (response.status === 200) {
         const updatedSkills = skills.filter((_, i) => i !== index);
         setSkills(updatedSkills);
@@ -158,12 +148,28 @@ const Skills = () => {
     }
   };
 
+  const handleAssignToDepartment = async (skillName) => {
+    try {
+      console.log(skillName)
+      const token = localStorage.getItem('token');
+      const response = await axios.post('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/skills/link-to-department', {
+        skillName: skillName
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
-  const handleAssignToDepartment = (assignedSkillName) => {
-    setAssignedSkills([...assignedSkills, assignedSkillName]);
+      if (response.status === 200) {
+        console.log('Skill linked to department successfully.');
+        // Poți adăuga orice alte acțiuni necesare aici
+      } else {
+        console.error('Error linking skill to department:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error linking skill to department:', error.message);
+    }
   };
-  
-  
 
   const handleFormFocus = () => {
     setButtonPosition('top');
@@ -173,9 +179,7 @@ const Skills = () => {
     setButtonPosition('bottom');
   };
 
-
   return (
-    
     <div className="skill-page">
       {errorMessage && <p className="error-messages">{errorMessage}</p>}
       <form
@@ -205,7 +209,6 @@ const Skills = () => {
           onChange={handleChange}
           placeholder="Description"
         />
-        
         <input
           type="text"
           name="departments"
@@ -236,21 +239,20 @@ const Skills = () => {
         </thead>
         <tbody className="contain">
           {skills.map((skill, index) => (
-          <tr key={index}>
-          <td className="one">{skill.category_id}</td>
-          <td className="two">{skill.skill_name}</td>
-          <td className="three">{skill.description}</td>
-          <td className="four">{skill.user}</td>
-          <td className="five">{skill.departments}</td>
-      <td className="six">
-        <button className="btnn-update" type="button" onClick={() => handleUpdateSkill(index)}><FaPencilAlt /></button>
-        <button className="btnn-delete" type="button" onClick={() => handleDeleteSkill(index)}><FaTrash /></button>
-        <button className="btnn-assign" type="button" onClick={() => handleAssignToDepartment(skill.skillName)}><FaUsers /></button>
-
-      </td>
-    </tr>
-  ))}
-</tbody>
+            <tr key={index}>
+              <td className="one">{skill.category}</td>
+              <td className="two">{skill.skill_name}</td>
+              <td className="three">{skill.description}</td>
+              <td className="four">{skill.author}</td>
+              <td className="five">{skill.department}</td>
+              <td className="six">
+                <button className="btnn-update" type="button" onClick={() => handleUpdateSkill(index)}><FaPencilAlt /></button>
+                <button className="btnn-delete" type="button" onClick={() => handleDeleteSkill(index)}><FaTrash /></button>
+                <button className="btnn-assign" type="button" onClick={() => handleAssignToDepartment(skill.skill_name)}><FaUsers /></button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
       <Link to="/depmanager"></Link>
     </div>

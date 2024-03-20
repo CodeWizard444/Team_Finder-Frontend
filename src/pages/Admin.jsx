@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './admin.css';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus , FaTrash} from 'react-icons/fa';
 
 const Admin = () => {
     const [roles, setRoles] = useState([]);
@@ -10,8 +10,8 @@ const Admin = () => {
         const savedSelectedRoles = localStorage.getItem('selectedRoles');
         return savedSelectedRoles ? JSON.parse(savedSelectedRoles) : {};
     });
-    const [employees, setEmployees] = useState([]); // Starea pentru lista de angajați
-    const [newRoleName, setNewRoleName] = useState(''); // Starea pentru numele noului rol
+    const [employees, setEmployees] = useState([]);
+    const [newRoleName, setNewRoleName] = useState(''); 
     useEffect(() => {
         localStorage.setItem('roles', JSON.stringify(roles));
     }, [roles]);
@@ -26,11 +26,11 @@ const Admin = () => {
                 const token = localStorage.getItem('token'); 
                 const response = await axios.get('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/organization/team-roles',{
                     headers: {
-                        Authorization: `Bearer ${token}`, // Adăugați token-ul în antetul cererii
+                        Authorization: `Bearer ${token}`, 
                     },
                 });
-                const roleNames = response.data.roles.map(role => role.role_name); // Extragem doar numele rolurilor
-                setRoles(roleNames); // Setăm lista de nume de roluri în starea 'roles'
+                const roleNames = response.data.roles.map(role => role.role_name); 
+                setRoles(roleNames); 
             } catch (error) {
                 console.error('Error fetching team roles:', error);
             }
@@ -43,13 +43,13 @@ const Admin = () => {
     useEffect(() => {
         const fetchOrganizationMembers = async () => {
             try {
-                const token = localStorage.getItem('token'); // Obțineți token-ul din localStorage
+                const token = localStorage.getItem('token'); 
                 const response = await axios.get('https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/organizator/members', {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Adăugați token-ul în antetul cererii
+                        Authorization: `Bearer ${token}`,
                     },
                 });
-                setEmployees(response.data.users); // Setează lista de angajați în starea 'employees'
+                setEmployees(response.data.users); 
             } catch (error) {
                 console.error('Error fetching organization members:', error);
             }
@@ -59,33 +59,51 @@ const Admin = () => {
     }, []);
     const addRole = async () => {
         try {
-            const token = localStorage.getItem('token'); // Obțineți token-ul din localStorage
+            const token = localStorage.getItem('token'); 
             const response = await axios.post(
                 'https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/organization/create/team-roles',
                 { role_name: newRoleName },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Adăugați token-ul în antetul cererii
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
             console.log('Role created successfully:', response.data);
-            setRoles(prevRoles => [...prevRoles, newRoleName]); // Adăugăm noul rol în lista de roluri
-            setNewRoleName(''); // Resetăm starea pentru numele noului rol
+            setRoles(prevRoles => [...prevRoles, newRoleName]); 
+            setNewRoleName(''); 
         } catch (error) {
             console.error('Error creating role:', error);
         }
     };
 
+    const deleteRole = async (roleName) => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(
+                `https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/organization/delete/team-roles/${roleName}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            console.log(`Role ${roleName} deleted successfully`);
+            setRoles(prevRoles => prevRoles.filter(role => role !== roleName));
+        } catch (error) {
+            console.error('Error deleting role:', error);
+        }
+    };
+
     const assignRole = async (employeeName, selectedRole) => {
         try {
-            const token = localStorage.getItem('token'); // Obțineți token-ul din localStorage
+            const token = localStorage.getItem('token');
             await axios.post(
                 `https://atc-2024-cyber-creators-be-linux-web-app.azurewebsites.net/api/organizator/${employeeName}/assignRole`,
                 { role: selectedRole },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Adăugați token-ul în antetul cererii
+                        Authorization: `Bearer ${token}`, 
                     },
                 }
             );
@@ -115,24 +133,26 @@ const Admin = () => {
             <div className="create-roles">
                 <div className="boxx-header">
                     <span className="itm">Company Roles</span>
+                    <span className="itm">Action</span>
                 </div>
                 {roles.map((role, index) => (
-                    <div key={index} className="role-item">
+                    <div key={index} className="roles-item">
                         {role}
+                        <button className="deletee-btnn" onClick={() => deleteRole(role)}><FaTrash /></button>
                     </div>
                 ))}
+                
             </div>
             <div className="promote-demote">
                 <div className="boxx-header">
                     <span className="fnc-item">Name</span>
                     <span className="fnc-item">Status</span>
+
                 </div>
                 {employees.map((employee, index) => (
                     <div key={index} className="employee-item">
-                        {/* Afișarea numelui de utilizator al angajatului */}
                         <span className="fnc-item">{employee.username}</span>
                         <span className="fnc-item">
-                            {/* Afișarea listei de selectare pentru rolurile disponibile */}
                             <select 
                                 value={selectedRoles[employee.username] || ''} 
                                 onChange={(e) => assignRole(employee.username, e.target.value)}

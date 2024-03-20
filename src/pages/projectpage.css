@@ -12,14 +12,12 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    cursor: text;
     height: 300px;
     width: 500px;
     overflow-y: auto;
-    white-space: pre-wrap;
     position: absolute;
     left: 100px;
-    bottom: 0;
+    top: 50px;
 }
 
 
@@ -29,14 +27,12 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    cursor: text;
     height: 300px;
     width: 500px;
     overflow-y: auto;
-    white-space: pre-wrap;
     position: absolute;
     right: 100px;
-    top: 0;
+    top: 50px;
 }
 
 .members-column
@@ -242,5 +238,130 @@
 
 .ai-btnn
 {
-    left: 150px;
+    right: -1220px;
 }
+
+.skill-assign
+{
+    background-image: linear-gradient(109.6deg, rgb(61, 121, 176) 11.3%, rgb(35, 66, 164) 91.1%);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    height: 300px;
+    width: 500px;
+    overflow-y: auto;
+    position: absolute;
+    right: 100px;
+    bottom: 0;
+}
+
+.skill-asgn
+{
+  font-size: 1.5em;
+  color: white;
+  margin-top: 340px;
+  margin-left: 1100px;
+}
+
+
+.project-skill
+{
+  background-image: linear-gradient(109.6deg, rgb(61, 121, 176) 11.3%, rgb(35, 66, 164) 91.1%);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  height: 300px;
+  width: 500px;
+  overflow-y: auto;
+  position: absolute;
+  left: 100px;
+  bottom: 0;
+}
+
+.prj-skill
+{
+    font-size: 1.5em;
+    color: white;
+    margin-top: -30px;
+    margin-left: 200px;
+}
+.skilll-header
+{
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid #090947; 
+  padding: 8px 0;
+}
+
+.fnc-itemm
+{
+    font-weight: 600;
+    color: #090947;
+}
+
+.project-skill-header
+{
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid #090947; 
+  padding: 8px 0;
+}
+
+.fncc-itemm
+{
+    font-weight: 600;
+    color: #090947;
+}
+
+.skill-row
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  padding: 5px 0;
+}
+
+.project-skill-row
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 0;
+
+}
+
+.skill-row span {
+  flex: 1;
+  text-align: center; 
+}
+
+.project-skill-row span {
+  flex: 1; 
+  text-align: center; 
+}
+
+
+.add-btnn-skill
+{
+    width: 30px;
+    height: 30px;
+    align-items: center; 
+    justify-content: center; 
+    gap: 0.5em;
+    background-color: white;
+    color: cadetblue;
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: .3em ;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 8px;
+}
+
+.add-btnn-skill:hover
+{
+    background-color:#090947;
+    color: white;
+}
+

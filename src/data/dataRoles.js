@@ -1,6 +1,6 @@
 const dataRoles = [
     {
-        name: "Mike Thompson",
+        name: "Olivia Jones",
         skills: ["React", "JavaScript", "HTML", "CSS"],
         department: "Departament 1",
         role: "department manager"

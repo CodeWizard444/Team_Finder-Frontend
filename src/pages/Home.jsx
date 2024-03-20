@@ -61,7 +61,7 @@ const Home = () => {
                                 Skills: {userData.skills.length > 0 ? userData.skills.map(skill => skill.skill_name).join(', ') : 'No skills'}
                                 </div>
                                 <div className="input-bx">
-                                Department: {userData.department_name ? userData.department_name : 'No departments'}
+                                Department: {userData.department ? userData.department: 'No departments'}
                                 </div>
                                 
                             </form>
@@ -79,7 +79,7 @@ const Home = () => {
             </div>
             <div className="look">
                 <h2>Have a look around!</h2>
-                <h3>And you will be surprised what you cand find out</h3>
+                <h3>And you will be surprised what you can find out</h3>
             </div>
 
         </div>
